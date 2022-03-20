@@ -1,0 +1,341 @@
+{% extends 'base.html.twig' %}
+
+{% block alerts %}
+    <div class="alert alert-success alert-dismissible fade" role="alert">
+        <strong>Przekazano cele do akceptacji przełożonego</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    <div class="alert alert-danger alert-dismissible fade" role="alert">
+        <strong>{{'Nie udało się przesłać. Kod błędu'|trans}}: <span class="error_code"></span></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endblock %}
+
+{% block main_greeting %}
+    <i class="fa fa-map-signs main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Przypisane cele'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive-sm">
+            <table class="table">
+                {% for username, assignedBonusGoals in usernamesAndAssignedBonusGoals %}
+                    <thead>
+                    <tr>
+                        <th colspan="4" scope="col">
+                            {% for user in users %}
+                                {% if username is same as user.userIdentifier %}
+                                    {{ user.firstName }} {{ user.lastName }}
+                                {% endif %}
+                            {% endfor %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Okres'|trans }}</th>
+                        <th scope="col">{{ 'Postęp'|trans }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for goal in assignedBonusGoals %}
+                            <tr>
+                                <th scope="row">{{ loop.index }}</th>
+                                <td>{{ goal.period|date('m-Y') }}</td>
+                                <td id="{{ goal.period|date('Y-m-d') }}_{{ username }}" class="progressInfo">{{ goal.progress|trans }}</td>
+                                <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-{{ username }}-{{ goal.period|date('d-m-Y') }}">
+                                        {{'Przejdź'|trans}}</button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endfor %}
+            </table>
+            {% for username, assignedBonusGoals in usernamesAndAssignedBonusGoals %}
+                {% for goal in assignedBonusGoals %}
+                <div class="modals" id="modalGroup">
+                    {% set modalIdentifier = username ~'-'~ goal.period|date('d-m-Y') %}
+                    <div id="modal-{{ modalIdentifier }}" class="modal fade" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ 'Karta celów za okres'|trans }}   {{ goal.period|date('m.Y') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="#" class="needs-validation" novalidate>
+                                    <div class="modal-body">
+                                        <div class="table-responsive-sm">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">{{ 'Cel'|trans }}</th>
+                                                        <th scope="col">{{ 'Waga celu'|trans }}</th>
+                                                        <th scope="col">{{ 'Oczekiwana wartość'|trans }}</th>
+                                                        <th scope="col">{{ 'Procent wykonania'|trans }}</th>
+                                                        <th scope="col">{{ 'Komentarz'|trans }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for targetName, targetValue in goal.bonusgoal.target %}
+                                                        <tr>
+                                                            <td class="bonusGoal">{{ targetName }}</td>
+                                                            <td>{{ targetValue }}%</td>
+                                                            <td>{{ goal.bonusgoal.expectedvalue[targetName] }}%</td>
+                                                            <td>
+                                                                {% if saveFieldVisibility[username][goal.period|date('d-m-Y')] is defined %}
+                                                                    {{ goal.completionpercentage[targetName] }}%
+                                                                {% else %}
+                                                                    <label>
+                                                                        <input type="number" value="{{ goal.completionpercentage[targetName] }}" class="form-control completionPercentage" data-bs-toggle="tooltip" data-bs-placement="top" title="Podaj liczbę" required>
+                                                                    </label>
+                                                                    <div class="valid-feedback">
+                                                                        Looks good!
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Looks good!
+                                                                    </div>
+                                                                {% endif %}
+                                                            </td>
+                                                            {% if goal.comment[targetName] is defined %}
+                                                                <td>{{ goal.comment[targetName] }}</td>
+                                                            {% else %}
+                                                                <td></td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#acceptancePath" aria-expanded="false" aria-controls="acceptancePath">
+                                            {{'Pokaż ścieżkę akceptacji celu'|trans}}
+                                        </button>
+                                        <br>
+                                        <div class="collapse" id="acceptancePath">
+                                            <div class="card card-body">
+                                                {% for key, target in goal.acceptancepath %}
+                                                    {% set datetime = key|split(' ') %}
+                                                    {% set message = target|split(' ') %}
+                                                    <p class="text-center">
+                                                        {{ message[0] }} {{ message[1] }}
+                                                        {% set translatableMessage = '' %}
+                                                        {% for word in message|slice(2, message|length) %}
+                                                            {% set translatableMessage = translatableMessage~word~' ' %}
+                                                        {% endfor %}
+                                                        {{ translatableMessage|spaceless|trans }}
+                                                        {{ 'dnia'|trans }} {{ datetime[0] }}
+                                                        {{ 'o godzinie'|trans }} {{ datetime[1] }}</p>
+                                                    {% if loop.index < goal.acceptancepath|length  %}
+                                                        <hr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        {% if saveFieldVisibility[username][goal.period|date('d-m-Y')] is not defined and goal.progress!=rejectedBonusGoalsMessage%}
+                                            <button type="button" class="btn btn-primary submitButton" data-bs-target="#modal_approve-{{ modalIdentifier }}" data-bs-toggle="">{{ 'Zapisz'|trans }}</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                                        {% elseif goal.progress==rejectedBonusGoalsMessage %}
+                                            <button type="button" class="btn btn-primary submitButtonSend" data-bs-target="#modal_approve-{{ modalIdentifier }}" data-bs-toggle="modal">{{ 'Prześlij ponownie'|trans }}</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                                        {% elseif goal.progress==declinedBonusGoalsMessage %}
+                                            <button type="button" class="btn btn-primary submitButton" data-bs-target="#modal_approve-{{ modalIdentifier }}" data-bs-toggle="">{{ 'Zapisz'|trans }}</button>
+                                            <a href="{{ path('edit_goal', {id:goal.bonusgoal.id}) }}" class="btn btn-warning">{{ 'Edytuj'|trans }}</a>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                                        {% endif %}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modal_approve-{{ modalIdentifier }}" aria-hidden="true" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ 'Czy na pewno chcesz'|trans }} <span class="keyWord"></span>
+                                        {{'kartę celów użytkownika'|trans}} {{ username }} {{ 'za okres'|trans }} {{ goal.period|date('m-Y') }}? </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-target="#modal-{{ modalIdentifier }}" data-bs-toggle="modal">
+                                        {{ 'Wróć do karty'|trans }}</button>
+                                    <button type="button" class="btn btn-primary ajaxCall" data-bs-dismiss="modal">{{ 'Prześlij'|trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                m1: 'Odrzucono ocenę',
+                m2: 'odrzucił ocenę',
+                m3: 'Zaakceptowano ocenę',
+                m4: 'zaakceptował cele',
+                m5: 'Odrzucono kartę celów',
+                m6: 'odrzucił cele',
+                m7: 'Przekazano cele do oceny przełożonego',
+                m8: 'zapoznał się z celami',
+                m9: 'Ocena przekazana do akceptacji pracownika',
+                m10: 'dokonał oceny celów biznesowych',
+                m11: 'Ocena ponownie przekazana do akceptacji pracownika',
+                m12: 'ponownie dokonał oceny celów biznesowych',
+            },
+            en: {
+                m1: 'Assessment rejected',
+                m2: 'rejected the assessment',
+                m3: 'Assessment accepted',
+                m4: 'accepted the goals',
+                m5: 'Objective card discarded',
+                m6: 'rejected the targets',
+                m7: 'Objectives were handed over to the supervisor to evaluate',
+                m8: 'familiarized himself with the goals',
+                m9: 'Assessment submitted for approval by the employee',
+                m10: 'assessed the business goals',
+                m11: 'Assessment returned to the employee for approval',
+                m12: 'reassessed the business goals',
+            }
+        }
+
+        let message = function changeLanguage(locale, messageToTranslate){
+            return translate[locale][messageToTranslate];
+        }
+
+        function cardAction(thisObject, progressMessage, acceptancePathMessage, m1, m2) {
+            let mainModalId = thisObject.parents().eq(4).children('.modal:nth-child(1)').attr('id');
+            let mainModal = $('#'+mainModalId);
+            let completionPercentageInputFields = mainModal.find('.completionPercentage').get();
+            let goalsForTheGivenPeriod = mainModal.find('.bonusGoal').get();
+            let databaseCompletionPercentageField_Array = {};
+            for (let i=0; i<completionPercentageInputFields.length; i++){
+                databaseCompletionPercentageField_Array[goalsForTheGivenPeriod[i].innerHTML] = completionPercentageInputFields[i].value;
+            }
+            let splittedModalId = mainModalId.split("-");
+            let durationOfTheGoal = splittedModalId[2] + '-' + splittedModalId[3] + '-' + splittedModalId[4];
+
+            $.ajax({
+                url:        '/ajax_changeStatusOfNotification',
+                type:       'GET',
+                dataType:   'json',
+                async:      true,
+                data:       {
+                    databaseCommentArray: databaseCompletionPercentageField_Array,
+                    period: durationOfTheGoal,
+                    message: progressMessage,
+                    acceptancePathMessage: acceptancePathMessage,
+                    action: 'completion_percentage',
+                    username: splittedModalId[1]
+                },
+
+                success: function(data) {
+                    let alertAction = $('.alert-success');
+                    alertAction.children('strong').html(message(userLanguage,m1));
+                    alertAction.addClass('show');
+                    mainModal.children().children().children().children('.modal-footer').children('.submitButton').addClass('disabled');
+                    mainModal.children().children().children().children('.modal-footer').children('.submitButtonSend').addClass('disabled');
+
+                    let p = $("<p></p>").addClass('text-center');
+                    let hr = $("<hr>");
+                    p.html(data['firstAndLastName']+' '+ message(userLanguage,m2) +' '+data['currentDate']+' o godzinie '+data['currentTime']);
+                    let acceptancePath = mainModal.children().children().children().children('.modal-body').children('.collapse').children('.card-body')
+                    acceptancePath.append(hr);
+                    acceptancePath.append(p);
+
+                    let progressFields = $('.progressInfo').toArray();
+                    for (let i = 0; i<progressFields.length; i++){
+                        let periodOfCurrentGoal = data['periodDate'].date.split(' '); //Date without time
+                        let progressFieldID = $(progressFields[i]).attr('id');
+                        let progressFieldID_parts = progressFieldID.split('_')
+                        if ((progressFieldID_parts[0]===periodOfCurrentGoal[0])&&(progressFieldID_parts[1]===splittedModalId[1])){
+                            $('#'+progressFieldID).html(message(userLanguage,m1));
+                        }
+                    }
+                    for (let i = 0; i<completionPercentageInputFields.length; i++){
+                        $(completionPercentageInputFields[i]).parent().html(databaseCompletionPercentageField_Array[goalsForTheGivenPeriod[i].innerHTML]);
+                        $(completionPercentageInputFields[i]).remove();
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    $('.error_code').html(errorThrown);
+                    $('.alert-danger').addClass('show');
+
+                }
+            });
+        }
+
+        $('.submitButton').click(function (){
+            $('.keyWord').html('{{'ocenić'|trans}}');
+            $('.ajaxCall').attr('id','evaluate');
+
+        });
+
+        $('.submitButtonSend').click(function (){
+            $('.keyWord').html('{{'ponownie przesłać'|trans}}');
+            $('.ajaxCall').attr('id','sendAgain');
+        });
+
+        $('.ajaxCall').click(function (){
+            let thisObject = $(this);
+            let statement = $(this).attr('id');
+            if (statement==='evaluate'){
+                cardAction(thisObject, 'Ocena przekazana do akceptacji pracownika', 'dokonał oceny celów biznesowych', 'm9', 'm10');
+            }else {
+                cardAction(thisObject, 'Ocena ponownie przekazana do akceptacji pracownika', 'ponownie dokonał oceny celów biznesowych', 'm11', 'm12');
+            }
+        });
+
+        let forms = $('.needs-validation');
+        for (let form of forms) {
+            let submitButton = $(form).find('button.submitButton');
+            let submitButtonSend = $(form).find('button.submitButtonSend');
+            let inputFields = $(form).find('.completionPercentage');
+            $(document).on('change', inputFields, function (){
+                if (!form.checkValidity()) {
+                    $(submitButton).attr('data-bs-toggle', '');
+                    $(submitButtonSend).attr('data-bs-toggle', '');
+                }else {
+                    $(submitButton).attr('data-bs-toggle', 'modal');
+                    $(submitButtonSend).attr('data-bs-toggle', 'modal');
+                }
+            });
+            $(submitButton).click(function (){
+                if (form.checkValidity()) {
+                    $(this).attr('data-bs-toggle', 'modal');
+                }
+                $(form).addClass('was-validated');
+            });
+            $(submitButtonSend).click(function (){
+                if (form.checkValidity()) {
+                    $(this).attr('data-bs-toggle', 'modal');
+                }
+                $(form).addClass('was-validated');
+            });
+        }
+
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+
+    </script>
+{% endblock %}

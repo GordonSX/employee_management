@@ -1,0 +1,374 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .form-control, .form-select{
+            margin-top: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('JQueryUI/jquery-ui.css') }}">
+{% endblock %}
+{% block main_greeting %}
+    <i class="fa fa-puzzle-piece main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1> {{ title|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    {% if errorsArray['firstName'] is defined %}
+                        {{ form_widget(form.first_name, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.first_name) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['firstName'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.first_name, {'attr': {'value' : firstName, 'class' : 'is-valid'}}) }}
+                        {{ form_label(form.first_name) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.first_name) }}
+                        {{ form_label(form.first_name) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    {% if errorsArray['lastName'] is defined %}
+                        {{ form_widget(form.last_name, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.last_name) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['lastName'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.last_name, {'attr': {'value' : lastName, 'class' : 'is-valid'}}) }}
+                        {{ form_label(form.last_name) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.last_name) }}
+                        {{ form_label(form.last_name) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray['dateOfBirth'] is defined %}
+                        {{ form_widget(form.date_of_birth, {'attr': {'class' : 'is-invalid ui-datepicker'}}) }}
+                        {{ form_label(form.date_of_birth) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['dateOfBirth'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.date_of_birth, {'attr': {'value' : dateOfBirth|date('Y-m-d'), 'class' : 'is-valid ui-datepicker'}}) }}
+                        {{ form_label(form.date_of_birth) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.date_of_birth) }}
+                        {{ form_label(form.date_of_birth) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.address, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.address) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.address) }}
+                        {{ form_label(form.address) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-xs-6">
+                <div class="form-floating">
+                    {% if errorsArray['city'] is defined %}
+                        {{ form_widget(form.city) }}
+                        {{ form_label(form.city) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['city'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.city, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.city) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.city) }}
+                        {{ form_label(form.city) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <div class="form-floating">
+                    {% if errorsArray['postal_code'] is defined %}
+                        {{ form_widget(form.postal_code) }}
+                        {{ form_label(form.postal_code) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['postal_code'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.postal_code, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.postal_code) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.postal_code) }}
+                        {{ form_label(form.postal_code) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xs-6">
+                <div class="form-floating">
+                    {% if errorsArray['email'] is defined %}
+                        {{ form_widget(form.email, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.email) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['email'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.email, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.email) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.email) }}
+                        {{ form_label(form.email) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="form-floating">
+                    {% if errorsArray['phoneNumber'] is defined %}
+                        {{ form_widget(form.phone_number, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.phone_number) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['phoneNumber'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.phone_number, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.phone_number) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.phone_number) }}
+                        {{ form_label(form.phone_number) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.supervisor, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.supervisor) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.supervisor) }}
+                        {{ form_label(form.supervisor) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.position, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.position) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.position) }}
+                        {{ form_label(form.position) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-floating">
+                    {% if errorsArray['dateOfEmployment'] is defined%}
+                        {{ form_widget(form.date_of_employment, {'attr': {'class' : 'is-invalid ui-datepicker'}}) }}
+                        {{ form_label(form.date_of_employment) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['dateOfEmployment'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.date_of_employment, {'attr': {'class' : 'is-valid ui-datepicker'}}) }}
+                        {{ form_label(form.date_of_employment) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.date_of_employment) }}
+                        {{ form_label(form.date_of_employment) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.roles, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.roles) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.roles) }}
+                        {{ form_label(form.roles) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.type_of_contract, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.type_of_contract) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.type_of_contract) }}
+                        {{ form_label(form.type_of_contract) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.bank_account_name, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.bank_account_name) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.bank_account_name) }}
+                        {{ form_label(form.bank_account_name) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray['bankAccountNumber'] is defined %}
+                        {{ form_widget(form.bank_account_number, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.bank_account_number) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['bankAccountNumber'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.bank_account_number, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.bank_account_number) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.bank_account_number) }}
+                        {{ form_label(form.bank_account_number) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    {% if errorsArray['numberOfVacationDays'] is defined %}
+                        {{ form_widget(form.number_of_vacation_days, {'attr': {'class' : 'is-invalid'}}) }}
+                        {{ form_label(form.number_of_vacation_days) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['numberOfVacationDays'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.number_of_vacation_days, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.number_of_vacation_days) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.number_of_vacation_days) }}
+                        {{ form_label(form.number_of_vacation_days) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-12">
+                {{ form_widget(form.save) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('JQueryUI/jquery-ui.js') }}"></script>
+    <script>
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                dayNamesMin: [ "N", "Pn", "Wt", "Śr", "Cz", "Pt", "So" ],
+                monthNames : [ "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" ],
+            },
+            en: {
+                dayNamesMin: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+                monthNames : [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+            },
+            fr: {
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                monthNames : [ "Janvier ", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+            },
+            de: {
+                dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+                monthNames : [ "Januar", "Februar", "Marz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
+            }
+        }
+        let today = new Date()
+        let year = today.getFullYear()
+        console.log(year)
+
+        $('input.ui-datepicker').datepicker({
+            dateFormat: "yy-mm-dd",
+            changeYear: true,
+            yearRange: "1960:"+year,
+            firstDay: 1,
+            showAnim: "clip",
+            dayNamesMin: translate[userLanguage]["dayNamesMin"],
+            monthNames: translate[userLanguage]["monthNames"]
+        });
+
+        /*$(document).on('change', '#form_zip_code', function () {
+            const regex = new RegExp('^[0-9]{2}-[0-9]{3}$');
+            str = $('#form_zip_code').val();
+            if (regex.test(str)){
+                $(this).removeClass('is-invalid')
+                $(this).addClass('is-valid')
+                $('#form_save').removeAttr('disabled')
+            }else{
+                $(this).removeClass('is-valid')
+                $(this).addClass('is-invalid')
+                $('#form_save').attr('disabled', 'disabled')
+            }
+        })*/
+
+
+    </script>
+{% endblock %}

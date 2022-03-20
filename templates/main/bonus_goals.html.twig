@@ -1,0 +1,300 @@
+{% extends 'base.html.twig' %}
+
+{% block main_greeting %}
+    <i class="fa fa-star main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Karty celów'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block alerts %}
+    <div class="alert alert-success alert-dismissible fade" role="alert">
+        <strong>{{'Przekazano cele do akceptacji przełożonego'|trans}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade" role="alert">
+        <strong>{{'Nie udało się przesłać. Kod błędu'|trans}}: <span class="error_code"></span></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive-sm">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Okres'|trans }}</th>
+                        <th scope="col">{{ 'Postęp'|trans }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for goal in allAssignedBonusGoals %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ goal.period|date('m-Y') }}</td>
+                            <td id="{{ goal.period|date('Y-m-d') }}" class="progressInfo">{{ goal.progress|trans }}</td>
+                            <td>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-{{ goal.period|date('d-m-Y') }}">
+                                {{'Przejdź'|trans}}</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% for goal in allAssignedBonusGoals %}
+        <div class="modals" id="modalGroup">
+            <div id="modal-{{ goal.period|date('d-m-Y') }}" class="modal fade modal-{{ goal.period|date('d-m-Y') }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ 'Karta celów za okres'|trans }} {{ goal.period|date('m.Y') }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'Cel'|trans }}</th>
+                                        <th scope="col">{{ 'Waga celu'|trans }}</th>
+                                        <th scope="col">{{ 'Oczekiwana wartość'|trans }}</th>
+                                        <th scope="col">{{ 'Procent wykonania'|trans }}</th>
+                                        <th scope="col">{{ 'Komentarz'|trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for target, targetValue in goal.bonusgoal.target %}
+                                            <tr>
+                                                <td class="bonusGoal">{{ target }}</td>
+                                                <td>{{ targetValue }}%</td>
+                                                <td>{{ goal.bonusgoal.expectedvalue[target] }}%</td>
+                                                <td>{{ goal.completionpercentage[target] }}%</td>
+                                                {% if saveFieldVisibility[goal.period|date('d-m-Y')] is defined and saveFieldVisibility[goal.period|date('d-m-Y')]=='disabled'%}
+                                                    {% if goal.comment[target] is defined %}
+                                                        <td>{{ goal.comment[target] }}</td>
+                                                    {% else %}
+                                                        <td></td>
+                                                    {% endif %}
+                                                {% else %}
+                                                <td>
+                                                    <label>
+                                                        <input type="text" class="form-control commentInputField">
+                                                    </label>
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-info" type="button" data-bs-toggle="collapse" data-bs-target="#acceptancePath" aria-expanded="false" aria-controls="acceptancePath">
+                                {{'Pokaż ścieżkę akceptacji celu'|trans}}
+                            </button>
+                            <br>
+                            <div class="collapse" id="acceptancePath">
+                                <div class="card card-body">
+                                    {% for date, message in goal.acceptancepath %}
+                                        {% set datetime = date|split(' ') %}
+                                        {% set messageToTranslate = message|split(' ') %}
+                                        <p class="text-center">
+                                            {{ messageToTranslate[0] }} {{ messageToTranslate[1] }}
+                                            {% set translatableMessage = '' %}
+                                            {% for word in messageToTranslate|slice(2, messageToTranslate|length) %}
+                                                {% set translatableMessage = translatableMessage~word~' ' %}
+                                            {% endfor %}
+                                            {{ translatableMessage|spaceless|trans }}
+                                            {{ 'dnia'|trans }} {{ datetime[0] }}
+                                            {{ 'o godzinie'|trans }} {{ datetime[1] }}</p>
+                                        {% if loop.index < goal.acceptancepath|length  %}
+                                            <hr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            {% if saveFieldVisibility[goal.period|date('d-m-Y')] is not defined and goal.progress!=ratedBonusGoalsMessage and goal.progress!=editedBonusGoalsMessage %}
+                                <button type="button" class="btn btn-secondary dismissCard" data-bs-target="#modal_approve-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">{{ 'Odrzuć'|trans }}</button>
+                                <button type="button" class="btn btn-primary acceptCard" data-bs-target="#modal_approve-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">{{ 'Zapisz'|trans }}</button>
+                            {% elseif goal.progress==ratedBonusGoalsMessage or goal.progress==editedBonusGoalsMessage %}
+                                <button type="button" class="btn btn-secondary dismissCard" data-bs-target="#modal_accept-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">{{ 'Odrzuć'|trans }}</button>
+                                <button type="button" class="btn btn-primary acceptCard" data-bs-target="#modal_accept-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">{{ 'Zaakceptuj'|trans }}</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal_approve-{{ goal.period|date('d-m-Y') }}" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ 'Czy na pewno chcesz'|trans }} <span class="keyWord"></span> {{'kartę celów za okres'|trans}} {{ goal.period|date('m-Y') }}? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-target="#modal-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">
+                                {{ 'Wróć do karty'|trans }}</button>
+                            <button type="button" class="btn btn-primary ajaxCallApprove" data-bs-dismiss="modal">{{ 'Prześlij'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal_accept-{{ goal.period|date('d-m-Y') }}" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ 'Czy na pewno chcesz'|trans }} <span class="keyWord"></span> {{'ocenę celów za okres'|trans}} {{ goal.period|date('m-Y') }}?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-target="#modal-{{ goal.period|date('d-m-Y') }}" data-bs-toggle="modal">
+                                {{ 'Wróć do karty'|trans }}</button>
+                            <button type="button" class="btn btn-primary ajaxCallAccept" data-bs-dismiss="modal">{{ 'Prześlij'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.acceptCard').click(function (){
+            $('.keyWord').html('{{'zaakceptować'|trans}}');
+            $('.ajaxCallAccept').attr('id','accept');
+            $('.ajaxCallApprove').attr('id','accept');
+        });
+        $('.dismissCard').click(function (){
+            $('.keyWord').html('{{'odrzucić'|trans}}');
+            $('.ajaxCallAccept').attr('id','dismiss');
+            $('.ajaxCallApprove').attr('id','dismiss');
+        });
+
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                m1: 'Odrzucono ocenę',
+                m2: 'odrzucił ocenę',
+                m3: 'Zaakceptowano ocenę',
+                m4: 'zaakceptował cele',
+                m5: 'Odrzucono kartę celów',
+                m6: 'odrzucił cele',
+                m7: 'Przekazano cele do oceny przełożonego',
+                m8: 'zapoznał się z celami',
+            },
+            en: {
+                m1: 'Assessment rejected',
+                m2: 'rejected the assessment',
+                m3: 'Assessment accepted',
+                m4: 'accepted the goals',
+                m5: 'Objective card discarded',
+                m6: 'rejected the targets',
+                m7: 'Objectives were handed over to the supervisor to evaluate',
+                m8: 'familiarized himself with the goals',
+            }
+        }
+
+        let message = function changeLanguage(locale, messageToTranslate){
+            return translate[locale][messageToTranslate];
+        }
+
+        $('.ajaxCallApprove').click(function (){
+            let thisObject = $(this);
+            let statement = $(this).attr('id');
+            if (statement==='dismiss'){
+                cardAction(thisObject, 'Odrzucono kartę celów', 'odrzucił cele', 'approveOrDecline', 'm5', 'm6');
+            }else {
+                cardAction(thisObject, 'Przekazano cele do oceny przełożonego', 'zapoznał się z celami', 'approveOrDecline', 'm7', 'm8');
+            }
+        });
+
+        $('.ajaxCallAccept').click(function (){
+            let thisObject = $(this);
+            let statement = $(this).attr('id');
+            if (statement==='dismiss'){
+                cardAction(thisObject, 'Odrzucono ocenę', 'odrzucił ocenę', 'acceptedOrDeclined', 'm1', 'm2');
+            }else {
+                cardAction(thisObject, 'Zaakceptowano ocenę', 'zaakceptował cele', 'acceptedOrDeclined', 'm3', 'm4');
+            }
+        });
+
+        function cardAction(thisObject, progressMessage, acceptancePathMessage, action, m1, m2 ) {
+            let mainModalId = thisObject.parents().eq(4).children('.modal:nth-child(1)').attr('id');
+            let jqIdentifierOdMainModal = $('.'+mainModalId);
+            let commentInputFields = jqIdentifierOdMainModal.find('.commentInputField').get();
+            let goalsForTheGivenPeriod = jqIdentifierOdMainModal.find('.bonusGoal').get();
+            let databaseCommentField_Array = {};
+            for (let i=0; i<commentInputFields.length; i++){
+                databaseCommentField_Array[goalsForTheGivenPeriod[i].innerHTML] = commentInputFields[i].value;
+            }
+
+            let splittedModalId = mainModalId.split("-");
+            let durationOfTheGoal = splittedModalId[1] + '-' + splittedModalId[2] + '-' + splittedModalId[3];
+            $.ajax({
+                url:        '/ajax_changeStatusOfNotification',
+                type:       'GET',
+                dataType:   'json',
+                async:      true,
+                data:       {
+                    databaseCommentArray: databaseCommentField_Array,
+                    period: durationOfTheGoal,
+                    message: progressMessage,
+                    acceptancePathMessage: acceptancePathMessage,
+                    action: action
+                },
+
+                success: function(data) {
+                    let alertAction = $('.alert-success');
+                    alertAction.children('strong').html(message(userLanguage,m1));
+                    alertAction.addClass('show');
+                    jqIdentifierOdMainModal.children().children().children('.modal-footer').children().addClass('disabled');
+
+                    let p = $("<p></p>").addClass('text-center');
+                    let hr = $("<hr>");
+                    p.html(data['firstAndLastName']+' '+message(userLanguage,m2)+' dnia '+data['currentDate']+' o godzinie '+data['currentTime']);
+                    let acceptancePath = jqIdentifierOdMainModal.children().children().children('.modal-body').children('.collapse').children('.card-body');
+                    acceptancePath.append(hr);
+                    acceptancePath.append(p);
+
+                    let progressFields = $('.progressInfo').toArray();
+                    for (let i = 0; i<progressFields.length; i++){
+                        let periodOfCurrentGoal = data['periodDate'].date.split(' '); //Date without time
+                        let progressFieldID = $(progressFields[i]).attr('id');
+                        if (progressFieldID===periodOfCurrentGoal[0]){
+                            $('#'+progressFieldID).html(message(userLanguage,m1));
+                        }
+                    }
+                    for (let i = 0; i<commentInputFields.length; i++){
+                        $(commentInputFields[i]).parent().html(databaseCommentField_Array[goalsForTheGivenPeriod[i].innerHTML]);
+                        $(commentInputFields[i]).remove();
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    $('.error_code').html(errorThrown);
+                    $('.alert-danger').addClass('show');
+                }
+            });
+        }
+        $(window).on('load', function() {
+            let date = '{{ redirectFromNotification }}';
+            date.toString();
+            if (date!== ''){
+                let id = '#modal-'+date;
+                $(id).modal('show');
+            }
+        });
+    </script>
+{% endblock %}

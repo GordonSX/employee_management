@@ -1,0 +1,200 @@
+Strona Główna : Maison
+Wnioski urlopowe : Demandes de congé
+Oceny całoroczne : Classements toute l'année
+Karty celów : Cartes objectif
+Stwórz nową kartę celów : Créer une nouvelle carte d'objectif
+Przypisane cele : Objectifs assignés
+Lista celów : Liste des objectifs
+Struktura organizacji : Structure d'organisation
+Powiadomienia : Avis
+Wyloguj się : Se déconnecter
+Panel Pracownika : Panel d'employés
+Imię i nazwisko : Prénom et nom
+Adres mailowy : Adresse e-mail
+Numer telefonu : Numéro de téléphone
+Info podstawowe : Informations de base
+Adres zamieszkania : Adresse
+Data urodzenia : Date de naissance
+Stanowisko : Position
+Ilość podwładnych : Nombre de subordonnés
+Przełożony : Superviseur
+Data zatrudnienia : Date d'embauche
+Typ zatrudnienia : Type d'emploi
+Nazwa Banku : Le nom de la banque
+Numer Konta : Numéro de compte
+Info o wypłatach : Informations sur les paiements
+Wybierz okres rozliczeniowy : Sélectionnez la période de facturation
+Podstawa : Base
+Premie : Bonus
+Ubezpieczenie emerytalne : Assurance retraite
+Ubezpieczenie rentowe : L'assurance invalidité
+Ubezpieczenie chorobowe : Assurance médicale
+Ubezpieczenie zdrowotne : Assurance santé
+Zaliczka na PIT : Paiement anticipé pour l'IPP
+Informacje kadrowe : Informations RH
+Okres : Point final
+Postęp : Le progrès
+Przejdź : Va
+Dodaj kolejny cel : Ajouter une autre cible
+Zapisz : Sauvegarder
+Stwórz kartę celów : Créer une carte d'objectif
+Zamknij : Ferme le
+Zatwierdź i przypisz : Confirmer et attribuer
+Wybierz grupę, do której chcesz przypisać cele : Sélectionnez le groupe auquel vous souhaitez attribuer des cibles
+Odrzuć : Jeter
+Styczeń : janvier
+Luty : Février
+Marzec : Mars
+Kwiecień : Avril
+Maj : Mai
+Czerwiec : Juin
+Lipiec : Juillet
+Sierpień : Août
+Wrzesień : Septembre
+Październik : Octobre
+Listopad : Novembre
+Grudzień : Décembre
+Umowa o pracę na czas nieokreślony : Contrat de travail à durée indéterminée
+Zaakceptowana : Accepté
+Cel : Objectif
+Waga celu : Objectif de poids
+Oczekiwana wartość : Valeur attendue
+Procent wykonania : Pourcentage d'achèvement
+Komentarz : Commenter
+Frekfencja : Présence
+Presorting : Pré-tri
+Doręczenia : Livraison
+Zaginione : Disparu
+BHP : Santé et sécurité
+Karta celów za okres : Carte d'objectifs pour la période
+Przekazano do oceny przełożonego : Envoyé au superviseur pour évaluation
+Przekazano do akceptacji pracownika : Transmettre l'employé pour approbation
+Front-end developer : Développeur frontal
+Back-end developer : Développeur back-end
+Graphic designer : Designer graphique
+Praktykant : Apprenti
+Godzina powiadomienia : Heure de notification
+Data powiadomienia : Date de notification
+Treść powiadomienia : Contenu de la notification
+Podgląd powiadomienia : Aperçu des notifications
+Usuń wiersz : Supprimer la ligne
+zabroniony dostęp do wykonywania, zabroniony dostęp do odczytu, zabroniony dostęp do zapisu, wymagany ssl, wymagany ssl 128, adres ip odrzucony, wymagany certyfikat klienta, odmowa dostępu do witryny, zbyt wielu użytkowników, nieprawidłowa konfiguracja, zmiana hasła, odmowa dostępu do mapowania, unieważnienie certyfikatu klienta, katalog odrzucenie listy, przekroczenie licencji dostępu klienta, certyfikat klienta jest niezaufany lub nieprawidłowy, certyfikat klienta wygasł lub nie jest jeszcze ważny, logowanie paszportowe nie powiodło się, odmowa dostępu do źródła, odmowa nieskończonej głębokości, zbyt wiele żądań z tego samego adresu IP klienta : accès en exécution refusé, accès en lecture refusé, accès en écriture refusé, ssl requis, ssl 128 requis, adresse IP refusée, certificat client requis, accès au site refusé, trop d'utilisateurs, configuration incorrecte, mot de passe modifié, accès au mappage refusé, révocation du certificat client, répertoire rejet de liste, licence d'accès client dépassée, certificat client non approuvé ou non valide, certificat client expiré ou pas encore valide, échec de la connexion au passeport, accès à la source refusé, profondeur infinie refusée, trop de demandes provenant de la même adresse IP du client
+KOD BŁĘDU : CODE D'ERREUR
+OPIS BŁĘDU : ERREUR DE DESCRIPTION
+BŁĄD PRAWDOPODOBNIE SPOWODOWANY PRZEZ : ERREUR PROBABLEMENT CAUSÉE PAR
+KILKA STRON DO KTÓRYCH MASZ DOSTĘP : PLUSIEURS PAGES AUXQUELLES VOUS POUVEZ ACCÉDER
+MIŁEGO DNIA : BONNE JOURNÉE
+DOSTĘP ZABRONIONY! : ACCÈS REFUSÉ!
+Dostęp zabroniony. Nie masz pozwolenia na dostęp do tej strony : Accès refusé. Vous n'êtes pas autorisé à accéder à cette page
+Wróć : Revenir
+Usuń : Supprimer
+Opcje : Choix
+Prześlij ponownie : Veuillez renvoyer
+Edytuj : Éditer
+Wróć do karty : Retour à la carte
+Prześlij : Nous faire parvenir
+ocenić : évaluer
+ponownie przesłać : renvoyez-le
+Zaakceptuj : J'accepte
+Przekazano cele do akceptacji przełożonego : Les objectifs ont été remis pour approbation par le supérieur
+Nie udało się przesłać. Kod błędu : Le téléchargement a échoué. Code d'erreur
+dnia : journée
+o godzinie : à
+przekazał kartę do oceny pracownika : remis la carte d'évaluation des employés
+edytował kartę celów : modifié la carte de but
+odrzucił cele : a rejeté les cibles
+zapoznał się z celami : s'est familiarisé avec les objectifs
+dokonał oceny celów biznesowych : évalué les objectifs commerciaux
+odrzucił ocenę : a rejeté l'évaluation
+ponownie dokonał oceny celów biznesowych : réévalué les objectifs commerciaux
+zaakceptował cele : accepté les objectifs
+Zaakceptowano ocenę : Évaluation acceptée
+Ocena ponownie przekazana do akceptacji pracownika : Évaluation retournée à l'employé pour approbation
+Przypisano do : Assigné à
+Podgląd : Aperçu
+Otrzymałeś nową kartę celów : Vous avez reçu une nouvelle carte objectif
+Twój bezpośredni przełożony przekazał Ci kartę celów biznesowych na okres : Votre supérieur hiérarchique vous a fourni une carte d'objectifs commerciaux pour une période
+Czy na pewno chcesz usunąć to powiadomienie? : Voulez-vous vraiment supprimer cette notification?
+Czy na pewno chcesz usunąć zaznaczone powiadomienia? : Voulez-vous vraiment supprimer les notifications sélectionnées?
+Odznacz jako przeczytane : Marquez-le comme lu
+Odznacz jako nieprzeczytane : Marquer comme non lu
+Usuń zaznaczone powiadomienia : Supprimer les notifications sélectionnées
+Przejdź do celu : Aller au but
+Czy na pewno chcesz : Voulez-vous vraiment
+ocenę celów za okres : évaluation des objectifs pour la période
+kartę celów za okres : carte d'objectifs pour la période
+odrzucić : rejeter
+zaakceptować : J'accepte
+Pokaż ścieżkę akceptacji celu : Afficher le chemin d'acceptation cible
+Odrzucono ocenę : Évaluation rejetée
+kartę celów użytkownika : carte des objectifs de l'utilisateur
+za okres : pour la période
+Ocena przekazana do akceptacji pracownika : Bilan soumis à l'approbation du salarié
+Przypisz cele do odpowiednich grup : Attribuez des objectifs aux groupes appropriés
+Nie można dodać kolejnej karty celów z tą samą datą! : Vous ne pouvez pas ajouter une autre carte objectif avec la même date!
+Przekazano cele do oceny przełożonego : Les objectifs ont été remis au superviseur pour évaluation
+Twój bezpośredni przełożony ponownie dokonał oceny celów biznesowych za okres : Votre supérieur hiérarchique a réévalué les objectifs commerciaux pour la période
+Twój bezpośredni przełożony dokonał oceny celów biznesowych za okres : Votre supérieur hiérarchique a évalué les objectifs commerciaux pour la période
+Nowa ocena karty celów : Nouvelle évaluation de la carte des buts
+Twój bezpośredni przełożony edytował kartę celów biznesowych : Votre supérieur hiérarchique a modifié la carte des objectifs commerciaux
+Edytowano kartę celów : La carte d'objectif a été modifiée
+Czy na pewno chcesz usunąć kartę celów za okres : Êtes-vous sûr de vouloir supprimer la carte d'objectif pour la période?
+Ilość dni urlopu : Nombre de jours de vacances
+Złóż wniosek : Faire une demande
+Zarządzaj wnioskami : Gérer les demandes
+Użytkownik : Utilisateur
+Typ wniosku : Le type de demande
+Osoba zastępująca : Une personne de remplacement
+Status wniosku : État de la candidature
+Akcje : Actions
+Potwierdź wykonanie akcji : Confirmer l'action
+wniosek : application
+Wniosek nie został zaakceptowany. Użytkownik ma za mało dni urlopu : La demande n'a pas été acceptée. L'utilisateur a trop peu de jours de vacances
+Zaloguj : Connexion
+Zarządzaj pracownikami : Gérez vos employés
+Stwórz nowego użytkownika : Créer un nouvel utilisateur
+Podgląd użytkownika : Aperçu utilisateur
+Czy na pewno chcesz usunąć użytkownika : Êtes-vous sûr de vouloir supprimer l'utilisateur
+Moje wnioski urlopowe : Mes demandes de vacances
+Zmień hasło : Changer le mot de passe
+Karta celów została usunięta : La carte objectif a été supprimée
+Wniosek zaakceptowano : La demande a été acceptée
+Wniosek odrzucono : La demande a été rejetée
+Imię : Nom
+Nazwisko : Nom
+Adres : Adresse
+Typ umowy : Type d'accord
+Nazwa banku : Le nom de la banque
+Numer konta bankowego : Numéro de compte bancaire
+Umowa na zastępstwo : Contrat de remplacement
+Umowa o pracę na czas określony  : Contrat de travail à durée déterminée
+Data urodzin : Date de naissance
+Miasto : Ville
+Kod pocztowy : Code postal
+Rola : Rôle
+Numer rachunku bankowego : Numéro de compte bancaire
+Umowa na okres próbny : Accord pour une période d'essai
+Umowa na czas określony : Contrat à durée déterminée
+Umowa na czas nieokreślony : Contrat à durée indéterminée
+Umowa na czas wykonywania określonej pracy : Un contrat pour la durée d'un travail spécifique
+Pracownik (brak możliwości zarządzania użytkownikami) : Employé (pas de possibilité de gérer les utilisateurs)
+Urlop wypoczynkowy : Congé annuel
+Wniosek przekazany do akceptacji : Demande soumise pour approbation
+Urlop na żądanie : Vacances sur demande
+Urlop okolicznościowy : Vacances occasionnelles
+Urlop szkoleniowy : Congé de formation
+Urlop bezpłatny : Congé sans solde
+Wybierz rodzaj wniosku : Choisissez le type de demande
+Podaj okres : Entrez une période
+Data rozpoczęcia urlopu : La date de début du congé
+Data zakończenia urlopu : Date de fin de congé
+Stan urlopu na dzień dzisiejszy : État des congés à ce jour
+Osoba akceptująca wniosek : La personne acceptant la candidature
+E-mail : E-mail
+Wybierz : Choisir
+
+Twój bezpośredni przełożony edytował kartę celów biznesowych za okres : Votre supérieur hiérarchique a modifié la carte des objectifs commerciaux pour la période
+Twój bezpośredni przełożony edytował kartę celów : Votre supérieur hiérarchique a modifié la carte d'objectif
+Twój bezpośredni przełożony zaakceptował Twój wniosek urlopowy na okres od : Votre supérieur hiérarchique a approuvé votre demande de congé pour une période allant du
+Twój bezpośredni przełożony odrzucił Twój wniosek urlopowy na okres od : Votre supérieur hiérarchique a rejeté votre demande de congé pour une période allant de
+do : à

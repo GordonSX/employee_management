@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block main_greeting %}
+    <i class="fa fa-user main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1> {{ 'Zarządzaj pracownikami'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block alerts %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive-sm">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Imię i nazwisko'|trans }}</th>
+                        <th scope="col" class="col-6">{{ 'Adres mailowy'|trans }}</th>
+                        <th scope="col">{{ 'Numer telefonu' }}</th>
+                        <th scope="col">{{ 'Opcje'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ user.firstName }} {{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phoneNumber }}</td>
+                        <td class="testClass">
+                            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalPreview-{{ user.id }}">
+                                {{'Podgląd'|trans}}</button>
+                            <a href="{{ path('edit_user', {id: user.id}) }}" class="btn btn-outline-warning editGoal">
+                                {{'Edytuj'|trans}}</a>
+                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete-{{ user.id }}">
+                                {{'Usuń'|trans}}</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% for user in users %}
+            <div id="modalPreview-{{ user.id }}" class="modal fade" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ 'Podgląd użytkownika'|trans }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <tbody class="user_preview">
+                                        <tr>
+                                            <th>{{ 'Imię'|trans }}: </th>
+                                            <td>{{ user.firstName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Nazwisko'|trans }}: </th>
+                                            <td>{{ user.lastName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Data urodzenia'|trans }}: </th>
+                                            <td>{{ user.dateOfBirth|date('d-m-Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Adres mailowy'|trans }}: </th>
+                                            <td>{{ user.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Numer telefonu'|trans }}: </th>
+                                            <td>{{ user.phoneNumber }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Adres'|trans }}: </th>
+                                            <td>{{ user.address }}, {{ user.postalCode }} {{ user.city }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Stanowisko'|trans }}: </th>
+                                            <td>{{ user.position }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Przełożony'|trans }}: </th>
+                                            <td>{{ user.supervisor }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Typ umowy'|trans }}: </th>
+                                            <td>{{ user.typeOfContract|trans }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Data zatrudnienia'|trans }}: </th>
+                                            <td>{{ user.dateOfEmployment|date('d-m-Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Nazwa banku'|trans }}: </th>
+                                            <td>{{ user.bankAccountName }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ 'Numer konta bankowego'|trans }}: </th>
+                                            <td>{{ user.bankAccountNumber }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalDelete-{{ user.id }}" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{'Czy na pewno chcesz usunąć użytkownika'|trans}} {{ user.firstName }} {{ user.lastName }}? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                            <a class="btn btn-danger ajaxCallDelete" href="{{ path('delete_user', {id: user.id}) }}">{{ 'Usuń'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

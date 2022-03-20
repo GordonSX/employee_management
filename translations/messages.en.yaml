@@ -1,0 +1,199 @@
+Strona Główna: Homepage
+Wnioski urlopowe: Vacation requests
+Oceny całoroczne: Annual assessments
+Karty celów: Bonus goals
+Stwórz nową kartę celów: Create new bonus goal
+Przypisane cele: Assigned goals
+Lista celów: List of goals
+Struktura organizacji: Organization structure
+Powiadomienia: Notifications
+Wyloguj się: Logout
+Panel Pracownika: Employee panel
+Imię i nazwisko: First name and last name
+Adres mailowy: E-mail address
+Numer telefonu: Phone number
+Info podstawowe: Basic information
+Adres zamieszkania: Address
+Data urodzenia: Date of birth
+Stanowisko: Position
+Ilość podwładnych: Number of subordinates
+Przełożony: Supervisor
+Data zatrudnienia: Date of employment
+Typ zatrudnienia: Employment type
+Nazwa Banku: Bank name
+Numer Konta: Account number
+Info o wypłatach: Information about payouts
+Wybierz okres rozliczeniowy: Select the billing period
+Podstawa: Basic salary
+Premie: Bonuses
+Ubezpieczenie emerytalne: Pension insurance
+Ubezpieczenie rentowe: Disability insurance
+Ubezpieczenie chorobowe: Medical insurance (in case of illness)
+Ubezpieczenie zdrowotne: Medical insurance
+Zaliczka na PIT: Advance payment for PIT
+Informacje kadrowe: HR information
+Okres: Period
+Postęp: Progress
+Przejdź: Show
+Dodaj kolejny cel: Add another target
+Zapisz: Save
+Stwórz kartę celów: Create new target list
+Zamknij: Close
+Zatwierdź i przypisz: Confirm and assign
+Wybierz grupę, do której chcesz przypisać cele: Select group to which you want to assign targets
+Odrzuć: Discard
+Styczeń: January
+Luty: February
+Marzec: March
+Kwiecień: April
+Maj: May
+Czerwiec: June
+Lipiec: July
+Sierpień: August
+Wrzesień: September
+Październik: October
+Listopad: November
+Grudzień: December
+Umowa o pracę na czas nieokreślony: Employment contract for an indefinite period
+Zaakceptowana: Accepted
+Cel: Target
+Waga celu: Target value
+Oczekiwana wartość: Expected Value
+Procent wykonania: Completion Percentage
+Komentarz: Comment
+Frekfencja: Attendance
+Presorting: Presorting
+Doręczenia: Delivery
+Zaginione: Lost parcels
+BHP: Health and Safety
+Karta celów za okres: Target card for the period of
+Przekazano do oceny przełożonego: Sent to the supervisor for evaluation
+Przekazano do akceptacji pracownika: Forwarded for employee approval
+Front-end developer: Front-end developer
+Back-end developer: Back-end developer
+Graphic designer: Graphic designer
+Praktykant: Apprentice
+Godzina powiadomienia: Time of notification
+Data powiadomienia: Date of notification
+Treść powiadomienia: Content of notification
+Podgląd powiadomienia: Notification preview
+Usuń wiersz: Delete row
+zabroniony dostęp do wykonywania, zabroniony dostęp do odczytu, zabroniony dostęp do zapisu, wymagany ssl, wymagany ssl 128, adres ip odrzucony, wymagany certyfikat klienta, odmowa dostępu do witryny, zbyt wielu użytkowników, nieprawidłowa konfiguracja, zmiana hasła, odmowa dostępu do mapowania, unieważnienie certyfikatu klienta, katalog odrzucenie listy, przekroczenie licencji dostępu klienta, certyfikat klienta jest niezaufany lub nieprawidłowy, certyfikat klienta wygasł lub nie jest jeszcze ważny, logowanie paszportowe nie powiodło się, odmowa dostępu do źródła, odmowa nieskończonej głębokości, zbyt wiele żądań z tego samego adresu IP klienta: execute access forbidden, read access forbidden, write access forbidden, ssl required, ssl 128 required, ip address rejected, client certificate required, site access denied, too many users, invalid configuration, password change, mapper denied access, client certificate revoked, directory listing denied, client access licenses exceeded, client certificate is untrusted or invalid, client certificate has expired or is not yet valid, passport logon failed, source access denied, infinite depth is denied, too many requests from the same client ip
+KOD BŁĘDU: ERROR CODE
+OPIS BŁĘDU: ERROR DESCRIPTION
+BŁĄD PRAWDOPODOBNIE SPOWODOWANY PRZEZ: ERROR POSSIBLY CAUSED BY
+KILKA STRON DO KTÓRYCH MASZ DOSTĘP: SOME PAGES ON THIS SERVER THAT YOU DO HAVE PERMISSION TO
+MIŁEGO DNIA: HAVE A NICE DAY
+DOSTĘP ZABRONIONY!: ACCESS DENIED!
+Dostęp zabroniony. Nie masz pozwolenia na dostęp do tej strony: Access Denied. You Do Not Have The Permission To Access This Page On This Server
+Wróć: Go back
+Usuń: Delete
+Opcje: Options
+Prześlij ponownie: Send again
+Edytuj: Edit
+Wróć do karty: Go back to card
+Prześlij: Send
+ocenić: evaluate
+ponownie przesłać: send again
+Zaakceptuj: Accept
+Przekazano cele do akceptacji przełożonego: The goals were handed over for approval by the superior
+Nie udało się przesłać. Kod błędu: Upload failed. Error code
+dnia: on
+o godzinie: at
+przekazał kartę do oceny pracownika: handed over the card for employee evaluation
+edytował kartę celów: edited the goal card
+odrzucił cele: rejected the goals
+zapoznał się z celami: familiarized himself with the goals
+dokonał oceny celów biznesowych: assessed the business goals
+odrzucił ocenę: rejected the assessment
+ponownie dokonał oceny celów biznesowych: reassessed the business goals
+zaakceptował cele: accepted the goals
+Zaakceptowano ocenę: Assessment accepted
+Ocena ponownie przekazana do akceptacji pracownika: Assessment returned to the employee for approval
+Przypisano do: Assigned to
+Podgląd: Preview
+Otrzymałeś nową kartę celów: You have received a new bonus goal card
+Twój bezpośredni przełożony przekazał Ci kartę celów biznesowych na okres: Your line manager has provided you with a business goals card for a period
+Czy na pewno chcesz usunąć to powiadomienie?: Are you sure you want to delete this notification?
+Czy na pewno chcesz usunąć zaznaczone powiadomienia?: Are you sure you want to delete the selected notifications?
+Odznacz jako przeczytane: Mark it as read
+Odznacz jako nieprzeczytane: Mark as unread
+Usuń zaznaczone powiadomienia: Delete selected notifications
+Przejdź do celu: Go to bonus goal
+Czy na pewno chcesz: Do you really want to
+ocenę celów za okres: the goal evaluation for the period
+kartę celów za okres: goal card for the period
+odrzucić: reject
+zaakceptować: accept
+Pokaż ścieżkę akceptacji celu: Show target acceptance path
+Odrzucono ocenę: Assessment rejected
+kartę celów użytkownika: the goal card for the user
+za okres: for period
+Ocena przekazana do akceptacji pracownika: Assessment submitted for approval by the employee
+Przypisz cele do odpowiednich grup: Assign goals to appropriate groups
+Nie można dodać kolejnej karty celów z tą samą datą!: You cannot add another objective card with the same date!
+Przekazano cele do oceny przełożonego: Objectives were handed over to the supervisor to evaluate
+Twój bezpośredni przełożony ponownie dokonał oceny celów biznesowych za okres: Your line manager has reassessed the business goals for the period
+Twój bezpośredni przełożony dokonał oceny celów biznesowych za okres: Your line manager has assessed the business goals for the period
+Nowa ocena karty celów: New assessment of the goals card
+Edytowano kartę celów: The objective card has been edited
+Czy na pewno chcesz usunąć kartę celów za okres: Are you sure you want to delete the goal card for the period
+Ilość dni urlopu: Number of vacation days
+Złóż wniosek: Submit an application
+Zarządzaj wnioskami: Manage requests
+Użytkownik: User
+Typ wniosku: The type of request
+Osoba zastępująca: A replacement person
+Status wniosku: Application status
+Akcje: Actions
+Potwierdź wykonanie akcji: Confirm the action
+wniosek: application
+Wniosek nie został zaakceptowany. Użytkownik ma za mało dni urlopu: The request was not accepted. User has too few vacation days
+Zaloguj: Login
+Zarządzaj pracownikami: Manage your employees
+Stwórz nowego użytkownika: Create a new user
+Podgląd użytkownika: User preview
+Czy na pewno chcesz usunąć użytkownika: Are you sure you want to delete the user
+Moje wnioski urlopowe: My vacation requests
+Zmień hasło: Change password
+Karta celów została usunięta: The objective card has been removed
+Wniosek zaakceptowano: The request was accepted
+Wniosek odrzucono: The request was rejected
+Imię: First Name
+Nazwisko: Last Name
+Adres: Address
+Typ umowy: Type of contract
+Nazwa banku: Bank name
+Numer konta bankowego: Account number
+Umowa na zastępstwo: Replacement contract
+Umowa o pracę na czas określony : Contract of employment on specified time
+Data urodzin: Date of birth
+Miasto: City
+Kod pocztowy: Postal code
+Rola: Role
+Numer rachunku bankowego: Account number
+Umowa na okres próbny: Agreement for a trial period
+Umowa na czas określony: Contract of employment on specified time
+Umowa na czas nieokreślony: Contract for an indefinite period
+Umowa na czas wykonywania określonej pracy: A contract for the duration of a specific job
+Pracownik (brak możliwości zarządzania użytkownikami): Employee (no possibility to manage users)
+Urlop wypoczynkowy: Annual leave
+Wniosek przekazany do akceptacji: Application submitted for approval
+Urlop na żądanie: Vacation on request
+Urlop okolicznościowy: Occasional holidays
+Urlop szkoleniowy: Training leave
+Urlop bezpłatny: Unpaid leave
+Wybierz rodzaj wniosku: Choose the type of request
+Podaj okres: Enter a period
+Data rozpoczęcia urlopu: Date of commencement of leave
+Data zakończenia urlopu: Leave end date
+Stan urlopu na dzień dzisiejszy: State of leave days as of today
+Osoba akceptująca wniosek: The person accepting the application
+E-mail: E-mail
+Wybierz: Choose
+
+Twój bezpośredni przełożony edytował kartę celów biznesowych za okres: Your line manager edited the goals card for a period
+Twój bezpośredni przełożony edytował kartę celów: Your line manager edited the goals card
+Twój bezpośredni przełożony zaakceptował Twój wniosek urlopowy na okres od: Your line manager has accepted your leave request for a period from
+Twój bezpośredni przełożony odrzucił Twój wniosek urlopowy na okres od: Your line manager has rejected your leave request for a period from
+do: to

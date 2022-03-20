@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block main_greeting %}
+    <i class="fa fa-calendar-check-o main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Moje wnioski urlopowe'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Typ wniosku'|trans }}</th>
+                        <th scope="col">{{ 'Okres'|trans }}</th>
+                        <th scope="col">{{ 'Osoba zastępująca'|trans }}</th>
+                        <th scope="col">{{ 'Status wniosku'|trans }}</th>
+                        <th scope="col">{{ 'Komentarz'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in vacationRequests %}
+                        <tr>
+                            <th scope="col">{{ loop.index }}</th>
+                            <td>{{ request.typeOfRequest|trans }}</td>
+                            <td>{{ request.dateFrom|date('d.m.Y') }} - {{ request.dateTo|date('d.m.Y') }}</td>
+                            <td>{{ request.replacementUser }}</td>
+                            <td>{{ request.status|trans }}</td>
+                            <td>{{ request.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

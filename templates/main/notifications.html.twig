@@ -1,0 +1,307 @@
+{% extends 'base.html.twig' %}
+
+{% block main_greeting %}
+    <i class="fa fa-bell-o main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1> {{ 'Powiadomienia'|trans }}</h1>
+    </div>
+
+{% endblock %}
+
+{% block mainPanel %}
+
+    <div class="adminPanel">
+        <div class="table-responsive-sm">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><button class="btn btn-outline-dark checkAll">#</button></th>
+                        <th scope="col">{{ 'Podgląd powiadomienia'|trans }}</th>
+                        <th scope="col">{{ 'Data powiadomienia'|trans }}</th>
+                        <th scope="col">{{ 'Godzina powiadomienia'|trans }}</th>
+                        <th scope="col" colspan="2">{{ 'Opcje'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for notification in notifications %}
+                    {% if notification.isItRead == false %}
+                        {% set className = 'unread' %}
+                    {% else %}
+                        {% set className = 'read' %}
+                    {% endif %}
+                    <tr class="{{ className }}">
+                        <th scope="row">
+                            <input class="form-check-input mt-0" type="checkbox" value="{{ notification.id }}">
+                        </th>
+                        <td hidden class="notificationId">{{ notification.id }}</td>
+                        <td>{{ notification.notificationPreview|trans }}</td>
+                        <td>{{ notification.dateOfNotification|date('Y-m-d') }}</td>
+                        <td>{{ notification.timeOfNotification|date('H:i:s') }}</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark ajaxCall" data-bs-toggle="modal" data-bs-target="#notification_{{ loop.index }}">
+                                {{'Przejdź'|trans}}</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#removeNotification_{{ loop.index }}">
+                                {{'Usuń'|trans}}</button>
+                        </td>
+                    </tr>
+                    <!-- Modal Remove Notification -->
+                    <div class="modal fade" id="removeNotification_{{ loop.index }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{ notification.notificationPreview|trans }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{'Czy na pewno chcesz usunąć to powiadomienie?'|trans}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                                    <button type="button" class="btn btn-primary ajaxCallRemove" data-bs-dismiss="modal">{{ 'Usuń'|trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Remove Multiple Notifications -->
+                    <div class="modal fade" id="removeNotifications" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{'Czy na pewno chcesz usunąć zaznaczone powiadomienia?'|trans}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                                    <button type="button" class="btn btn-primary removeCheckedApprove" data-bs-dismiss="modal">{{ 'Usuń'|trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="notification_{{ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ notification.notificationPreview|trans }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {% set notificationContent = notification.contentOfNotification|split(' ') %}
+                                    {% set translatedMessage = '' %}
+                                    {% if notification.additionalInformation['pathName'] is defined %}
+                                        {% if notification.additionalInformation['pathName'] is same as 'bonus_goals' %}
+                                            {% for word in notificationContent|slice(0, notificationContent|length-1) %}
+                                                {% set translatedMessage = translatedMessage~word~' ' %}
+                                            {% endfor %}
+                                            <p>{{ translatedMessage|spaceless|trans }} {{ notificationContent|last }}</p>
+                                        {% elseif notification.additionalInformation['pathName'] is same as 'list_of_requests' %}
+                                            {% for word in notificationContent|slice(0, notificationContent|length-3) %}
+                                                {% set translatedMessage = translatedMessage~word~' ' %}
+                                            {% endfor %}
+                                            <p>{{ translatedMessage|spaceless|trans }} {{ notificationContent[notificationContent|length-3]~' '~notificationContent[notificationContent|length-2]|trans~' '~notificationContent|last }}</p>
+                                        {% endif %}
+                                    {% else %}
+                                        {{ notification.contentOfNotification|trans }}
+                                    {% endif %}
+                                    {% if notification.additionalInformation is not null %}
+                                        {% if notification.additionalInformation['parameters'] is not null %}
+                                            <a class="btn btn-outline-dark" href="{{ path(notification.additionalInformation['pathName'], notification.additionalInformation['parameters'])  }}">
+                                                {{'Przejdź do celu'|trans}}</a>
+                                        {% else %}
+                                            <a class="btn btn-outline-dark" href="{{ path(notification.additionalInformation['pathName']) }}">
+                                                {{'Przejdź'|trans}}</a>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Zamknij'|trans }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </tbody>
+            </table>
+            <button class="form-control btn btn-outline-dark checkAsRead disabled">{{ 'Odznacz jako przeczytane'|trans }}</button>
+            <button class="form-control btn btn-outline-dark checkAsUnread disabled">{{ 'Odznacz jako nieprzeczytane'|trans }}</button>
+            <button class="form-control btn btn-outline-dark removeChecked disabled" data-bs-toggle="modal" data-bs-target="#removeNotifications">
+                {{'Usuń zaznaczone powiadomienia'|trans}}</button>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            let checkAsRead = $('.checkAsRead');
+            let checkAsUnread = $('.checkAsUnread');
+            let removeChecked = $('.removeChecked');
+
+            function disableButtons() {
+                checkAsRead.addClass('disabled');
+                checkAsUnread.addClass('disabled');
+                removeChecked.addClass('disabled');
+            }
+
+            function checkIfAnyCheckboxisCheckedAndDisableButtons() {
+                if($(".form-check-input").is(':checked')){
+                    checkAsRead.removeClass('disabled');
+                    checkAsUnread.removeClass('disabled');
+                    removeChecked.removeClass('disabled');
+                }else {
+                    disableButtons();
+                }
+            }
+
+            checkIfAnyCheckboxisCheckedAndDisableButtons();
+            $('.form-check-input').click(function (){
+                checkIfAnyCheckboxisCheckedAndDisableButtons();
+            });
+
+            $('.checkAll').click(function (){
+                let checkedBoxes = $(".form-check-input");
+                checkedBoxes.prop('checked', !checkedBoxes.prop('checked'));
+                checkIfAnyCheckboxisCheckedAndDisableButtons();
+            });
+
+            function getCheckedElementsAndRowsToChangeStatus() {
+                let checkedBoxes = $('.form-check-input:checked');
+                let allCheckedElementsID = [];
+                let rowsToChangeStatus = [];
+                for (let checkBox of checkedBoxes) {
+                    allCheckedElementsID.push($(checkBox).val());
+                    rowsToChangeStatus.push($(checkBox).parent().parent());
+                }
+
+                return [allCheckedElementsID, rowsToChangeStatus];
+            }
+
+            function changeStatusOfNotification(isItRead, id, rowToChangeStatus) {
+                if (id === ''){
+                    id = getCheckedElementsAndRowsToChangeStatus()[0];
+                }
+
+                let checkedBoxes = $('.form-check-input:checked');
+
+                $.ajax({
+                    url:        '/ajax_setNotificationAsRead',
+                    type:       'GET',
+                    dataType:   'json',
+                    async:      true,
+                    data:       {
+                        id: id,
+                        isItRead: isItRead
+                    },
+
+                    success: function(data) {
+                        if (rowToChangeStatus==='') {
+                            for (let row of getCheckedElementsAndRowsToChangeStatus()[1]) {
+                                if (isItRead === 1) {
+                                    $(row).removeClass('unread');
+                                } else {
+                                    $(row).addClass('unread');
+                                }
+                            }
+                        }else{
+                            rowToChangeStatus.removeClass('unread');
+                        }
+                        for (let checkBox of checkedBoxes) {
+                            $(checkBox).prop('checked', false);
+                        }
+                        disableButtons();
+                        let badge = $('.badge');
+                        let counter = data['count'];
+                        if (counter>0){
+                            badge.html(counter);
+                            badge.addClass('visible');
+                            badge.removeClass('invisible');
+                        }else {
+                            badge.addClass('invisible');
+                            badge.removeClass('visible');
+                        }
+                    },
+                    error : function(jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+
+            checkAsRead.on('click', function (){
+                changeStatusOfNotification(1, '', '');
+            });
+
+            checkAsUnread.on('click', function (){
+                changeStatusOfNotification(0, '', '');
+            });
+
+            $('.ajaxCall').on('click', function (){
+                let id = $(this).parent().parent().children('.notificationId').html();
+                let row = $(this).parent().parent();
+                changeStatusOfNotification(1, id, row);
+            });
+
+
+            let rowToRemove = '';
+            let idToRemove = '';
+
+            $('.btn-outline-danger').click(function (){
+                rowToRemove = $(this).parent().parent();
+                idToRemove = $(this).parent().parent().children('.notificationId').html();
+            });
+
+            function removeNotification(id, rowToDelete) {
+                if (id === ''){
+                    id = getCheckedElementsAndRowsToChangeStatus()[0];
+                }
+                $.ajax({
+                    url:        '/ajax_removeNotification',
+                    type:       'GET',
+                    dataType:   'json',
+                    async:      true,
+                    data:       {
+                        id: id
+                    },
+                    success: function(data) {
+                        if (rowToDelete===''){
+                            for (let row of getCheckedElementsAndRowsToChangeStatus()[1]) {
+                                row.remove();
+                            }
+                            disableButtons();
+                        }else {
+                            rowToDelete.remove();
+                        }
+                        let badge = $('.badge');
+                        let counter = data['count'];
+                        if (counter>0){
+                            badge.html(counter);
+                            badge.addClass('visible');
+                            badge.removeClass('invisible');
+                        }else {
+                            badge.addClass('invisible');
+                            badge.removeClass('visible');
+                        }
+                    },
+                    error : function(jqXHR, textStatus, errorThrown) {
+                        console.log(errorThrown);
+                    }
+                });
+            }
+            
+            $('.ajaxCallRemove').on('click', function (){
+                removeNotification(idToRemove, rowToRemove);
+            });
+
+            $('.removeCheckedApprove').on('click', function (){
+                removeNotification('', '');
+            });
+
+        });
+    </script>
+{% endblock %}

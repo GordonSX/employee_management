@@ -1,0 +1,216 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('JQueryUI/jquery-ui.css') }}">
+    <style>
+        .form-select{
+            margin-bottom: 2em;
+        }
+    </style>
+{% endblock %}
+{% block main_greeting %}
+    <i class="fa fa-pencil main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Złóż wniosek'|trans }}</h1>
+    </div>
+{% endblock %}
+{% block alerts %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+
+        {{ form_start(form, {'attr': {'class' : 'needs-validation'}}) }}
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.type_of_request, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.type_of_request) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.type_of_request) }}
+                        {{ form_label(form.type_of_request) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray['date_from'] is defined %}
+                        {{ form_widget(form.date_from, {'attr': {'class' : 'is-invalid ui-datepicker'}}) }}
+                        {{ form_label(form.date_from) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['date_from'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.date_from, {'attr': {'class' : 'is-valid ui-datepicker'}}) }}
+                        {{ form_label(form.date_from) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.date_from) }}
+                        {{ form_label(form.date_from) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray['date_to'] is defined %}
+                        {{ form_widget(form.date_to, {'attr': {'class' : 'is-invalid ui-datepicker'}}) }}
+                        {{ form_label(form.date_to) }}
+                        <div class="invalid-feedback">
+                            {{ errorsArray['date_to'] }}
+                        </div>
+                    {% elseif errorsArray is defined %}
+                        {{ form_widget(form.date_to, {'attr': {'class' : 'is-valid ui-datepicker'}}) }}
+                        {{ form_label(form.date_to) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.date_to) }}
+                        {{ form_label(form.date_to) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <br>
+                <p>{{ 'Stan urlopu na dzień dzisiejszy'|trans }}: <b>{{ app.user.numberOfVacationDays }}</b></p>
+            </div>
+        </div>
+        <div class="form-floating">
+            {% if errorsArray is defined %}
+                {{ form_widget(form.replacement_user, {'attr': {'class' : 'is-valid'}}) }}
+                {{ form_label(form.replacement_user) }}
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            {% else %}
+                {{ form_widget(form.replacement_user) }}
+                {{ form_label(form.replacement_user) }}
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col">
+                <br>
+                <p>{{ 'Osoba akceptująca wniosek'|trans }}: <b>{{ app.user.supervisor }}</b></p>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive-sm">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">{{'Imię'|trans }}</th>
+                                        <th scope="col">{{'Nazwisko'|trans }}</th>
+                                        <th scope="col">{{ 'E-mail'|trans  }}</th>
+                                        <th scope="col">{{ 'Stanowisko'|trans  }}</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    {% if user.userIdentifier != app.user.userIdentifier %}
+                                        <tr>
+                                            <td><img width="30" src="{{ asset(user.profilePicture) }}" alt="" class="profile_picture"/></td>
+                                            <td class="firstName">{{ user.firstName }}</td>
+                                            <td class="lastName">{{ user.lastName }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.position }}</td>
+                                            <td><button class="btn btn-outline-dark selectButton" data-bs-dismiss="modal">
+                                                {{ 'Wybierz'|trans }}</button></td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('JQueryUI/jquery-ui.js') }}"></script>
+    <script>
+        $('.selectButton').click(function (){
+            let firstName = $(this).parent().parent().children('.firstName').html();
+            let lastName = $(this).parent().parent().children('.lastName').html()
+            $('.replacementPerson').val(firstName + ' ' + lastName);
+        })
+
+        let disabledDates = [];
+
+        {% for nonWorkingDay in nonWorkingDays %}
+            {% for day in nonWorkingDay.days %}
+                disabledDates.push('{{ day }}');
+            {% endfor %}
+        {% endfor %}
+
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                dayNamesMin: [ "N", "Pn", "Wt", "Śr", "Cz", "Pt", "So" ],
+                monthNames : [ "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" ],
+            },
+            en: {
+                dayNamesMin: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+                monthNames : [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+            },
+            fr: {
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                monthNames : [ "Janvier ", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+            },
+            de: {
+                dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+                monthNames : [ "Januar", "Februar", "Marz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
+            }
+        }
+
+        $('input.ui-datepicker').datepicker({
+            beforeShowDay: function(date) {
+                let day = date.getDay();
+                let string = jQuery.datepicker.formatDate('yy-mm-dd', date)
+                return [(day !== 0 && day !== 6 && disabledDates.indexOf(string) === -1), ''];
+            },
+            dateFormat: "yy-mm-dd",
+            firstDay: 1,
+            minDate: 0,
+            showAnim: "clip",
+            dayNamesMin: translate[userLanguage]["dayNamesMin"],
+            monthNames: translate[userLanguage]["monthNames"]
+        });
+    </script>
+{% endblock %}

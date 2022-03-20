@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block main_greeting %}
+    <i class="fa fa-list main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Lista celów'|trans }}</h1>
+    </div>
+
+{% endblock %}
+{% block alerts %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block mainPanel %}
+
+    <div class="adminPanel">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'Okres'|trans }}</th>
+                        <th scope="col" class="col-6">{{ 'Przypisano do'|trans }}</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for goal in allBonusGoals %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ goal.perioddate|date('m-Y') }}</td>
+                        <td class="col-6">
+                            {% set assignedToArray = goal.assignedTo|split(';') %}
+                            {% for position in assignedToArray %}
+                                {{ position }}<br>
+                            {% endfor %}
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalPreview-{{ goal.periodDate|date('d-m-Y') }}">
+                                {{'Podgląd'|trans}}</button>
+                            <a href="{{ path('edit_goal', {id: goal.id}) }}" class="btn btn-outline-warning editGoal">
+                                {{'Edytuj'|trans}}</a>
+                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete-{{ goal.periodDate|date('d-m-Y') }}">
+                                {{'Usuń'|trans}}</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% for goal in allBonusGoals %}
+            <div id="modalPreview-{{ goal.perioddate|date('d-m-Y') }}" class="modal fade modalPreview-{{ goal.perioddate|date('d-m-Y') }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ 'Karta celów za okres'|trans }}   {{ goal.perioddate|date('m.Y') }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive-sm">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">{{ 'Cel'|trans }}</th>
+                                            <th scope="col">{{ 'Waga celu'|trans }}</th>
+                                            <th scope="col">{{ 'Oczekiwana wartość'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for target, value in goal.target %}
+                                        <tr>
+                                            <td class="bonusGoal">{{ target }}</td>
+                                            <td>{{ value }}%</td>
+                                            <td>{{ goal.expectedvalue[target] }}%</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalDelete-{{ goal.perioddate|date('d-m-Y') }}" aria-hidden="true" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{'Czy na pewno chcesz usunąć kartę celów za okres'|trans}} {{ goal.perioddate|date('m-Y') }}? </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Wróć do karty'|trans }}</button>
+                            <a class="btn btn-danger ajaxCallDelete" href="{{ path('delete_goal', {'day': goal.perioddate|date('d'), 'month': goal.perioddate|date('m'), 'year': goal.perioddate|date('Y')}) }}">{{ 'Usuń'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

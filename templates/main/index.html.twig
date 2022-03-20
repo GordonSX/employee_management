@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block main_greeting %}
+    <i class="fa fa-home main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Strona Główna'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block alerts %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel panel1">
+        <h2>{{ 'Info podstawowe'|trans }}</h2>
+        <hr>
+        <div class="section">
+            <span>{{ 'Imię i nazwisko'|trans }}: </span>              <span>{{ app.user.firstName }} {{ app.user.lastName }}</span>
+            <span>{{ 'Adres mailowy'|trans }}: </span>                <span>{{ app.user.email }}</span>
+            <span>{{ 'Numer telefonu'|trans }}: </span>
+            <span>
+                {% set phone = app.user.phoneNumber|split('', 3) %}
+                {% for digits in phone %}
+                    {{ digits }}
+                {% endfor %}
+            </span>
+            <span>{{ 'Adres zamieszkania'|trans }}: </span>           <span>{{ app.user.address }}, {{ app.user.postalCode }} {{ app.user.city }}</span>
+            <span>{{ 'Data urodzenia'|trans }}: </span>               <span>{{ app.user.dateofbirth|date("d-m-Y") }}</span>
+        </div>
+    </div>
+
+    <div class="adminPanel panel2">
+        <h2>{{ 'Informacje kadrowe'|trans }}</h2>
+        <hr>
+        <div class="section">
+            <span>{{ 'Stanowisko'|trans }}: </span>                         <span>{{ app.user.position }}</span>
+            <span>{{ 'Ilość podwładnych'|trans}}: </span>                   <span>{{ numberOfEmployees }}</span>
+            <span>{{ 'Ilość dni urlopu'|trans}}: </span>                   <span>{{ app.user.numberOfVacationDays }}</span>
+            <span>{{ 'Przełożony'|trans}}: </span>                          <span>{{ app.user.supervisor }}</span>
+            <span>{{ 'Data zatrudnienia'|trans }}: </span>                  <span>{{ app.user.dateofemployment|date("d-m-Y") }}</span>
+            <span>{{ 'Typ zatrudnienia'|trans }}: </span>                   <span>{{ app.user.typeofcontract|trans }}</span>
+            <span>{{ 'Nazwa Banku'|trans }}: </span>                        <span>{{ app.user.bankaccountname }}</span>
+
+            <span>{{ 'Numer Konta'|trans }}: </span>
+            <span>
+                {% set doubleParts = app.user.bankaccountnumber|split('', 4) %}
+                {% for part in doubleParts %}
+                    {{ part }}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+    {% if informationAboutUserPayment is not null %}
+    <div class="adminPanel panel3">
+        <h2>{{'Info o wypłatach'|trans}}</h2>
+        <hr>
+
+        <div class="section">
+            <label for="payment-info">{{ 'Wybierz okres rozliczeniowy'|trans }}:</label>
+            <select name="" id="payment-info" class="form-control">
+
+                    {% for date, value in informationAboutUserPayment.basicsalary %}
+                        {% if loop.index == 1 %}
+                            <option id="defaultOption" value="{{ date }}">{{ date }}</option>
+                        {% else %}
+                            <option value="{{ date }}">{{ date }}</option>
+                        {% endif %}
+                    {% endfor %}
+
+            </select>
+        </div>
+        <div class="section" id="info">
+            {% set  basicSalary=informationAboutUserPayment.basicSalary|first %}
+            {% set  bonusSalary=informationAboutUserPayment.bonusSalary|first %}
+            {% set gross=basicSalary+bonusSalary %}
+            <span>{{ 'Podstawa'|trans }}: </span>                                 <span>{{ basicSalary }} zł</span>
+            <span class="indent">{{ "Premie"|trans }}: </span>                    <span>{{ bonusSalary }} zł</span>
+            <span class="indent">{{ "Ubezpieczenie emerytalne"|trans }}: </span>  <span> {{ (gross*monthlyEmployeeCosts.pensionInsurance/100)|round(2) }}zł</span>
+            <span class="indent">{{ "Ubezpieczenie rentowe"|trans }}: </span>     <span>{{ (gross*monthlyEmployeeCosts.disabilityInsurance/100)|round(2) }} zł</span>
+            <span class="indent">{{ "Ubezpieczenie chorobowe"|trans }}: </span>   <span>{{ (gross*monthlyEmployeeCosts.insuranceInCaseOfIllness/100)|round(2) }} zł</span>
+            <span class="indent">{{ "Ubezpieczenie zdrowotne"|trans }}: </span>   <span>{{ (gross*monthlyEmployeeCosts.medicalInsurance/100)|round(2) }} zł</span>
+            <span class="indent">{{ "Zaliczka na PIT"|trans }}: </span>           <span>{{ (gross*monthlyEmployeeCosts.advancePaymentForPIT/100)|round(2) }} zł</span>
+        </div>
+    </div>
+                {% endif %}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            let paymentInfo = $('#payment-info');
+            paymentInfo.val($('#defaultOption').val());
+            function ajaxCall(functionToExecute) {
+                $.ajax({
+                    url:        '/ajax_paymentInfo',
+                    type:       'GET',
+                    dataType:   'json',
+                    async:      true,
+
+                    success: function(data) {
+                        functionToExecute(data);
+                    },
+                    error : function() {
+                        alert('Ajax request failed.');
+                    }
+                });
+            }
+
+            function appendHTML(data) {
+                let date = paymentInfo.val();
+                let basic_salary = data['basic_salary'][date];
+                let bonus_salary = data['bonus_salary'][date];
+                let info = $('#info');
+
+                info.html('');
+
+                let gross = basic_salary + bonus_salary;
+                info.append("<span>{{ 'Podstawa'|trans }}: </span><span>" + basic_salary + " zł</span>");
+                info.append('<span class="indent">{{ "Premie"|trans }}: </span><span>' + bonus_salary + ' zł </span>');
+                info.append('<span class="indent">{{ "Ubezpieczenie emerytalne"|trans }}: </span><span> ' + Math.round(gross*data['pension_insurance'])/100 + 'zł</span>');
+                info.append('<span class="indent">{{ "Ubezpieczenie rentowe"|trans }}: </span><span>' + Math.round(gross*data['disability_insurance'])/100 + ' zł</span>');
+                info.append('<span class="indent">{{ "Ubezpieczenie chorobowe"|trans }}: </span><span>' + Math.round(gross*data['insurance_in_case_of_illness'])/100 + ' zł</span>');
+                info.append('<span class="indent">{{ "Ubezpieczenie zdrowotne"|trans }}: </span><span>' + Math.round(gross*data['medical_insurance'])/100 + ' zł</span>');
+                info.append('<span class="indent">{{ "Zaliczka na PIT"|trans }}: </span><span>' + Math.round(gross*data['advance_payment_for_PIT'])/100 + ' zł</span>');
+            }
+
+            paymentInfo.on("change", function(){
+                ajaxCall(appendHTML);
+            });
+        });
+    </script>
+{% endblock %}

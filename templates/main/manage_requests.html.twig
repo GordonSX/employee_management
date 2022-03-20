@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block alerts %}
+    <div class="alert alert-success alert-dismissible fade" role="alert">
+        <strong></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade" role="alert">
+        <strong>{{'Nie udało się przesłać. Kod błędu'|trans}}: <span class="error_code"></span></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endblock %}
+
+{% block main_greeting %}
+    <i class="fa fa-wrench main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Zarządzaj wnioskami'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ 'Użytkownik'|trans }}</th>
+                    <th scope="col">{{ 'Typ wniosku'|trans }}</th>
+                    <th scope="col">{{ 'Okres'|trans }}</th>
+                    <th scope="col">{{ 'Osoba zastępująca'|trans }}</th>
+                    <th scope="col">{{ 'Status wniosku'|trans }}</th>
+                    <th scope="col">{{ 'Akcje'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set loopIndex = 1 %}
+                {% for user, requests in usersAndRequests %}
+                    {% for request in requests %}
+                        <tr>
+                            <th scope="col" id="{{ request.id }}">{{ loopIndex }}</th>
+                            <td>{{ user }}</td>
+                            <td>{{ request.typeOfRequest|trans }}</td>
+                            <td>{{ request.dateFrom|date('d.m.Y') }} - {{ request.dateTo|date('d.m.Y') }}</td>
+                            <td>{{ request.replacementUser }}</td>
+                            <td class="statusOfRequest">{{ request.status|trans }}</td>
+                            <td>
+                                {% if request.status == acceptStatus or request.status == declineStatus %}
+                                    <button class="btn btn-outline-success disabled">{{ 'Zaakceptuj'|trans }}</button>
+                                    <button class="btn btn-outline-danger disabled">{{ 'Odrzuć'|trans }}</button>
+                                {% else %}
+                                    <button class="btn btn-outline-success acceptCard" data-bs-toggle="modal" data-bs-target="#acceptDeclineModal">{{ 'Zaakceptuj'|trans }}</button>
+                                    <button class="btn btn-outline-danger dismissCard" data-bs-toggle="modal" data-bs-target="#acceptDeclineModal">{{ 'Odrzuć'|trans }}</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% set loopIndex = loopIndex + 1 %}
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Accept Modal -->
+        <div class="modal fade" id="acceptDeclineModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">{{ 'Potwierdź wykonanie akcji'|trans }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>{{ 'Czy na pewno chcesz'|trans }} <span class="keyWord"></span> {{ 'wniosek'|trans }}?</p>
+                        <input type="text" class="form-control comment-field text-center" placeholder="Dodaj komentarz">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'Zamknij'|trans }}</button>
+                        <button type="button" class="btn btn-outline-success ajaxCallAccept" data-bs-dismiss="modal">
+                            {{ 'Prześlij'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        function cardAction(thisObject, idOfRequest, status, actionToPerform){
+            let comment = $('.comment-field').val();
+            $.ajax({
+                url:        '/ajax_changeStatusOfRequest',
+                type:       'GET',
+                dataType:   'json',
+                async:      true,
+                data:       {
+                    idOfRequest: idOfRequest,
+                    actionToPerform: actionToPerform,
+                    comment: comment
+                },
+
+                success: function(data) {
+                    if (data['alert'] === 'success'){
+                        thisObject.parent().children().addClass('disabled');
+                        thisObject.parent().parent().find('.statusOfRequest').html(status);
+                        $('.alert-success>strong').html(status);
+                        $('.alert-success').addClass('show');
+                    }else if (data['alert'] === 'danger'){
+                        $('.alert-danger>strong').html('{{ 'Wniosek nie został zaakceptowany. Użytkownik ma za mało dni urlopu'|trans }}');
+                        $('.alert-danger').addClass('show');
+                    }
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    $('.error_code').html(errorThrown);
+                    $('.alert-danger').addClass('show');
+                }
+            });
+        }
+        let thisObject = '';
+        let idOfRequest = '';
+        $('.acceptCard').click(function (){
+            $('.ajaxCallAccept').attr('id', 'accept');
+            $('.keyWord').html('{{'zaakceptować'|trans}}');
+            thisObject = $(this);
+            idOfRequest = $(this).parent().parent().children('th').attr('id');
+            $('.comment-field').val('');
+        })
+        $('.dismissCard').click(function (){
+            $('.ajaxCallAccept').attr('id', 'dismiss');
+            $('.keyWord').html('{{'odrzucić'|trans}}');
+            thisObject = $(this);
+            idOfRequest = $(this).parent().parent().children('th').attr('id');
+            $('.comment-field').val('');
+        })
+
+        $('.ajaxCallAccept').click(function (){
+            let actionToPerform = $(this).attr('id');
+            if (actionToPerform === 'accept'){
+                cardAction(thisObject, idOfRequest, 'Wniosek zaakceptowano', actionToPerform);
+            }else if (actionToPerform === 'dismiss'){
+                cardAction(thisObject, idOfRequest, 'Wniosek odrzucono', actionToPerform);
+            }
+
+        });
+    </script>
+{% endblock %}

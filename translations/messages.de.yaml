@@ -1,0 +1,200 @@
+Strona Główna : Zuhause
+Wnioski urlopowe : Anfragen hinterlassen
+Oceny całoroczne : Ganzjährige Bewertungen
+Karty celów : Zielkarten
+Stwórz nową kartę celów : Erstellen Sie eine neue Zielkarte
+Przypisane cele : Zugewiesene Ziele
+Lista celów : Liste der Ziele
+Struktura organizacji : Organisationsstruktur
+Powiadomienia : Benachrichtigungen
+Wyloguj się : Ausloggen
+Panel Pracownika : Mitarbeiterpanel
+Imię i nazwisko : Vorname und Nachname
+Adres mailowy : E-Mail-Addresse
+Numer telefonu : Telefonnummer
+Info podstawowe : Basisinformation
+Adres zamieszkania : Adresse
+Data urodzenia : Geburtsdatum
+Stanowisko : Position
+Ilość podwładnych : Anzahl der Untergebenen
+Przełożony : Aufsicht
+Data zatrudnienia : Datum der Einstellung
+Typ zatrudnienia : Beschäftigungsverhältnis
+Nazwa Banku : Der Name der Bank
+Numer Konta : Kontonummer
+Info o wypłatach : Infos zu Auszahlungen
+Wybierz okres rozliczeniowy : Wählen Sie den Abrechnungszeitraum aus
+Podstawa : Base
+Premie : Boni
+Ubezpieczenie emerytalne : Pensionsversicherung
+Ubezpieczenie rentowe : Invalidenversicherung
+Ubezpieczenie chorobowe : Krankenversicherung
+Ubezpieczenie zdrowotne : Krankenversicherung
+Zaliczka na PIT : Vorauszahlung für PIT
+Informacje kadrowe : HR-Informationen
+Okres : Zeitraum
+Postęp : Progress
+Przejdź : Gehen
+Dodaj kolejny cel : Fügen Sie ein weiteres Ziel hinzu
+Zapisz : Speichern
+Stwórz kartę celów : Erstellen Sie eine Zielkarte
+Zamknij : Schließe es
+Zatwierdź i przypisz : Bestätigen und zuweisen
+Wybierz grupę, do której chcesz przypisać cele : Wählen Sie die Gruppe aus, der Sie Ziele zuweisen möchten
+Odrzuć : Verwerfen
+Styczeń : Januar
+Luty : Februar
+Marzec : Marsch
+Kwiecień : April
+Maj : Mai
+Czerwiec : Juni
+Lipiec : Juli
+Sierpień : August
+Wrzesień : September
+Październik : Oktober
+Listopad : November
+Grudzień : Dezember
+Umowa o pracę na czas nieokreślony : Arbeitsvertrag auf unbestimmte Zeit
+Zaakceptowana : Akzeptiert
+Cel : Zielsetzung
+Waga celu : Zielgewicht
+Oczekiwana wartość : Erwarteter Wert
+Procent wykonania : Abgeschlossene Prozent
+Komentarz : Kommentar
+Frekfencja : Teilnahme
+Presorting : Vorsortieren
+Doręczenia : Die Zustellung
+Zaginione : Fehlen
+BHP : Gesundheit und Sicherheit
+Karta celów za okres : Zielkarte für den Zeitraum
+Przekazano do oceny przełożonego : Zur Auswertung an den Vorgesetzten geschickt
+Przekazano do akceptacji pracownika : Weiterleitung des Mitarbeiters zur Genehmigung
+Front-end developer : Entwickler für Benutzeroberflächen
+Back-end developer : Backend-Entwickler
+Graphic designer : Grafikdesigner
+Praktykant : Lehrling
+Godzina powiadomienia : Zeitpunkt der Benachrichtigung
+Data powiadomienia : Datum der Benachrichtigung
+Treść powiadomienia : Inhalt der Benachrichtigung
+Podgląd powiadomienia : Benachrichtigungsvorschau
+Usuń wiersz : Löschen Sie die Zeile
+zabroniony dostęp do wykonywania, zabroniony dostęp do odczytu, zabroniony dostęp do zapisu, wymagany ssl, wymagany ssl 128, adres ip odrzucony, wymagany certyfikat klienta, odmowa dostępu do witryny, zbyt wielu użytkowników, nieprawidłowa konfiguracja, zmiana hasła, odmowa dostępu do mapowania, unieważnienie certyfikatu klienta, katalog odrzucenie listy, przekroczenie licencji dostępu klienta, certyfikat klienta jest niezaufany lub nieprawidłowy, certyfikat klienta wygasł lub nie jest jeszcze ważny, logowanie paszportowe nie powiodło się, odmowa dostępu do źródła, odmowa nieskończonej głębokości, zbyt wiele żądań z tego samego adresu IP klienta : Ausführungszugriff verweigert, Lesezugriff verweigert, Schreibzugriff verweigert, SSL erforderlich, SSL 128 erforderlich, IP-Adresse verweigert, Client-Zertifikat erforderlich, Site-Zugriff verweigert, zu viele Benutzer, falsche Konfiguration, Passwort geändert, Zuordnungszugriff verweigert, Client-Zertifikat widerrufen, Verzeichnis Listenablehnung, Client-Zugriffslizenz überschritten, Client-Zertifikat nicht vertrauenswürdig oder ungültig, Client-Zertifikat abgelaufen oder noch nicht gültig, Passport-Anmeldung fehlgeschlagen, Quellenzugriff verweigert, unendliche Tiefe verweigert, zu viele Anfragen von derselben IP-Adresse des Clients
+KOD BŁĘDU : FEHLERCODE
+OPIS BŁĘDU : FEHLERBESCHREIBUNG
+BŁĄD PRAWDOPODOBNIE SPOWODOWANY PRZEZ : FEHLER WIRD WAHRSCHEINLICH VERURSACHT DURCH
+KILKA STRON DO KTÓRYCH MASZ DOSTĘP : MEHRERE SEITEN, AUF DIE SIE ZUGREIFEN KÖNNEN
+MIŁEGO DNIA : SCHÖNEN TAG NOCH
+DOSTĘP ZABRONIONY! : ZUGRIFF VERWEIGERT!
+Dostęp zabroniony. Nie masz pozwolenia na dostęp do tej strony : Zugriff verweigert. Sie sind nicht berechtigt, auf diese Seite zuzugreifen
+Wróć : Komm zurück
+Usuń : Löschen
+Opcje : Optionen
+Prześlij ponownie : Bitte sende es erneut
+Edytuj : Bearbeiten
+Wróć do karty : Gehen Sie zurück zur Karte
+Prześlij : Einreichen
+ocenić : zu bewerten
+ponownie przesłać : sende es erneut
+Zaakceptuj : Annehmen
+Przekazano cele do akceptacji przełożonego : Die Ziele wurden dem Vorgesetzten zur Genehmigung vorgelegt
+Nie udało się przesłać. Kod błędu : Upload fehlgeschlagen. Fehlercode
+dnia : tag
+o godzinie : bei
+przekazał kartę do oceny pracownika : die Karte zur Mitarbeiterbewertung übergeben
+edytował kartę celów : die Zielkarte bearbeitet
+odrzucił cele : lehnte die Ziele ab
+zapoznał się z celami : sich mit den Zielen vertraut gemacht
+dokonał oceny celów biznesowych : die Unternehmensziele beurteilt
+odrzucił ocenę : lehnte die Bewertung ab
+ponownie dokonał oceny celów biznesowych : die Unternehmensziele neu bewertet
+zaakceptował cele : nahm die Tore an
+Zaakceptowano ocenę : Bewertung akzeptiert
+Ocena ponownie przekazana do akceptacji pracownika : Die Bewertung wird dem Mitarbeiter zur Genehmigung zurückgegeben
+Przypisano do : Zugewiesen an
+Podgląd : Vorschau
+Otrzymałeś nową kartę celów : Du hast eine neue Zielkarte erhalten
+Twój bezpośredni przełożony przekazał Ci kartę celów biznesowych na okres : Ihr direkter Vorgesetzter hat Ihnen für einen bestimmten Zeitraum eine Karte mit Geschäftszielen zur Verfügung gestellt
+Czy na pewno chcesz usunąć to powiadomienie? : Möchten Sie diese Benachrichtigung wirklich löschen?
+Czy na pewno chcesz usunąć zaznaczone powiadomienia? : Möchten Sie die ausgewählten Benachrichtigungen wirklich löschen?
+Odznacz jako przeczytane : Als gelesen markieren
+Odznacz jako nieprzeczytane : Als ungelesen markieren
+Usuń zaznaczone powiadomienia : Ausgewählte Benachrichtigungen löschen
+Przejdź do celu : Gehen Sie zum Ziel
+Czy na pewno chcesz : Willst du wirklich
+ocenę celów za okres : Einschätzung der Ziele für den Zeitraum
+kartę celów za okres : Zielkarte für den Zeitraum
+odrzucić : ablehnen
+zaakceptować : annehmen
+Pokaż ścieżkę akceptacji celu : Zielakzeptanzpfad anzeigen
+Odrzucono ocenę : Bewertung abgelehnt
+kartę celów użytkownika : zielkarte des Benutzers
+za okres : für den Zeitraum
+Ocena przekazana do akceptacji pracownika : Vom Mitarbeiter zur Genehmigung vorgelegte Bewertung
+Przypisz cele do odpowiednich grup : Weisen Sie Ziele den entsprechenden Gruppen zu
+Nie można dodać kolejnej karty celów z tą samą datą! : Sie können keine weitere Zielkarte mit demselben Datum hinzufügen!
+Przekazano cele do oceny przełożonego : Die Ziele wurden dem Betreuer zur Bewertung übergeben
+Twój bezpośredni przełożony ponownie dokonał oceny celów biznesowych za okres : Ihr direkter Vorgesetzter hat die Geschäftsziele für den Zeitraum neu bewertet
+Twój bezpośredni przełożony dokonał oceny celów biznesowych za okres : Ihr direkter Vorgesetzter hat die Geschäftsziele für den Zeitraum bewertet
+Nowa ocena karty celów : Neubewertung der Zielkarte
+Twój bezpośredni przełożony edytował kartę celów biznesowych : Ihr direkter Vorgesetzter hat die Karte mit den Geschäftszielen bearbeitet
+Edytowano kartę celów : Die Zielkarte wurde bearbeitet
+Czy na pewno chcesz usunąć kartę celów za okres : Möchten Sie die Zielkarte für den Zeitraum wirklich löschen?
+Ilość dni urlopu : Anzahl Urlaubstage
+Złóż wniosek : Sich bewerben
+Zarządzaj wnioskami : Anfragen verwalten
+Użytkownik : Benutzer
+Typ wniosku : Die Art der Anfrage
+Osoba zastępująca : Eine Ersatzperson
+Status wniosku : Bewerbungsstatus
+Akcje : Aktionen
+Potwierdź wykonanie akcji : Bestätigen Sie die Aktion
+wniosek : Anwendung
+Wniosek nie został zaakceptowany. Użytkownik ma za mało dni urlopu : Die Anfrage wurde nicht akzeptiert. Benutzer hat zu wenige Urlaubstage
+Zaloguj : Anmeldung
+Zarządzaj pracownikami : Verwalten Sie Ihre Mitarbeiter
+Stwórz nowego użytkownika : Erstellen Sie einen neuen Benutzer
+Podgląd użytkownika : Benutzervorschau
+Czy na pewno chcesz usunąć użytkownika : Möchten Sie den Benutzer wirklich löschen?
+Moje wnioski urlopowe : Meine Urlaubswünsche
+Zmień hasło : Passwort ändern
+Karta celów została usunięta : Die Zielkarte wurde entfernt
+Wniosek zaakceptowano : Der Antrag wurde angenommen
+Wniosek odrzucono : Der Antrag wurde abgelehnt
+Imię : Name
+Nazwisko : Name
+Adres : Adresse
+Typ umowy : Vereinbarungstyp
+Nazwa banku : Der Name der Bank
+Numer konta bankowego : Kontonummer
+Umowa na zastępstwo : Ersatzvertrag
+Umowa o pracę na czas określony  : Arbeitsvertrag auf bestimmte Zeit
+Data urodzin : Geburtsdatum
+Miasto : Stadt
+Kod pocztowy : Postleitzahl
+Rola : Rolle
+Numer rachunku bankowego : Kontonummer
+Umowa na okres próbny : Vertrag auf Probezeit
+Umowa na czas określony : Befristeten Vertrag
+Umowa na czas nieokreślony : Vertrag auf unbestimmte Zeit
+Umowa na czas wykonywania określonej pracy : Ein Vertrag für die Dauer einer bestimmten Stelle
+Pracownik (brak możliwości zarządzania użytkownikami) : Mitarbeiter (keine Möglichkeit Benutzer zu verwalten)
+Urlop wypoczynkowy : Jährlicher Urlaub
+Wniosek przekazany do akceptacji : Antrag zur Genehmigung eingereicht
+Urlop na żądanie : Urlaub auf Anfrage
+Urlop okolicznościowy : Gelegentliche Feiertage
+Urlop szkoleniowy : Bildungsurlaub
+Urlop bezpłatny : Unbezahlter Urlaub
+Wybierz rodzaj wniosku : Wählen Sie die Art der Anfrage
+Podaj okres : Geben Sie einen Punkt ein
+Data rozpoczęcia urlopu : Das Anfangsdatum des Urlaubs
+Data zakończenia urlopu : Enddatum hinterlassen
+Stan urlopu na dzień dzisiejszy : Urlaubsstand heute
+Osoba akceptująca wniosek : Die Person, die den Antrag annimmt
+E-mail : Email
+Wybierz : Wählen
+
+Twój bezpośredni przełożony edytował kartę celów biznesowych za okres : Ihr direkter Vorgesetzter hat die Karte mit den Geschäftszielen für den Zeitraum bearbeitet
+Twój bezpośredni przełożony edytował kartę celów : Ihr Vorgesetzter hat die Zielkarte bearbeitet
+Twój bezpośredni przełożony zaakceptował Twój wniosek urlopowy na okres od : Ihr Vorgesetzter hat Ihren Urlaubsantrag für einen Zeitraum vom genehmigt
+Twój bezpośredni przełożony odrzucił Twój wniosek urlopowy na okres od : Ihr Vorgesetzter hat Ihren Urlaubsantrag für einen Zeitraum vom abgelehnt
+do : bis

@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('JQueryUI/jquery-ui.css') }}">
+{% endblock %}
+
+{% block main_greeting %}
+    <i class="fa fa-plus main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Stwórz kartę celów'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block alerts %}
+    {% if alert is defined and alert==true %}
+        <div class="alert alert-danger show alert-dismissible fade" role="alert">
+            <strong>{{'Nie można dodać kolejnej karty celów z tą samą datą!'|trans}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        <div class="table-responsive-sm">
+            {{ form_start(form) }}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'Cel'|trans }}</th>
+                            <th scope="col">{{ 'Waga celu'|trans }}</th>
+                            <th scope="col">{{ 'Oczekiwana wartość'|trans }}</th>
+                            <th scope="col">{{ 'Usuń wiersz'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody  id="input-fields-list"
+                            data-prototype="{{ form_widget(form.target.vars.prototype, {'attr': {'value': 0}})|e }}"
+                            data-widget-tags="{{ '<td></td>'|e }}"
+                            data-widget-counter="{{ form.target|length }}">
+                    {% if error is defined %}
+                        {% for i in 0..form.target|length-1 %}
+                            <tr>
+                                <td>
+                                    {{ form_widget(form.target[i], {'attr': {'class': 'form-control'}}) }}
+                                </td>
+                                <td>
+                                    {{ form_widget(form.target_value[i], {'attr': {'class': 'form-control'}}) }}
+                                </td>
+                                <td>
+                                    {{ form_widget(form.expected_value[i], {'attr': {'class': 'form-control'}}) }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-close delete_row"></button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <td>
+                            {{ form_widget(form.target[0]) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form.target_value[0]) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form.expected_value[0]) }}
+                        </td>
+                        <td></td>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{{ 'Przypisz cele do odpowiednich grup'|trans }}</h5>
+                            </div>
+                            <div class="modal-body">
+                                {{ form_widget(form.assigned_to) }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary form-control" data-bs-dismiss="modal">{{ 'Zamknij'|trans }}</button>
+                                {{ form_widget(form.save) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-3">
+                        {{ form_widget(form.period_date) }}
+                    </div>
+                </div>
+                <br>
+                <button type="button"
+                        class="add-another-collection-widget form-control btn btn-secondary"
+                        data-list-selector="#input-fields-list">{{ 'Dodaj kolejny cel'|trans }}</button>
+                <button class="btn btn-success form-control modal-save" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                    {{'Zatwierdź i przypisz'|trans}}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('JQueryUI/jquery-ui.js') }}"></script>
+    <script>
+        /*let list = jQuery(jQuery('.add-another-collection-widget').attr('data-list-selector'));
+        let counter = list.data('widget-counter') || list.children().length;
+        for (let i = 1; i<=counter; i++){
+            let targetValue = '#form_target_value_'+i;
+            let target = '#form_target_'+i;
+            let targetExpectedValue = '#form_expected_value_'+i;
+            $(targetValue).parents().eq(2).remove();
+            $(target).parents().eq(2).remove();
+            $(targetExpectedValue).parents().eq(2).remove();
+        }*/
+        //Szybki bug-fix, nie jestem pewien dlaczego się w ogóle pojawia ;/
+        $(document).ready(function () {
+            $('.add-another-collection-widget').click(function () {
+                let list = jQuery(jQuery(this).attr('data-list-selector'));
+                let newTR = document.createElement("tr");
+                let button = document.createElement("button");
+                let newTD = document.createElement("td");
+                button.classList.add('btn', 'delete_row', 'btn-close');
+
+                let D = document.getElementById("input-fields-list");
+                D.appendChild(newTR);
+                let counter = list.data('widget-counter') || list.children().length;
+
+                let newWidget = list.attr('data-prototype');
+
+                newWidget = newWidget.replace(/__name__/g, counter);
+                let newWidget1 = newWidget.replace(/target/g, 'target_value');
+                let newWidget2 = newWidget.replace(/target/g, 'expected_value');
+                counter++;
+
+                list.data('widget-counter', counter);
+
+                let newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                newElem.appendTo(newTR);
+                newElem = jQuery(list.attr('data-widget-tags')).html(newWidget1);
+                newElem.appendTo(newTR);
+                newElem = jQuery(list.attr('data-widget-tags')).html(newWidget2);
+                newElem.appendTo(newTR);
+                newTD.appendChild(button);
+                newTR.appendChild(newTD);
+                $('#form_target_'+(counter-1)).val('')
+            });
+        });
+
+        $(document).on('click', '.delete_row', function (){
+           $(this).parent().parent().remove();
+        });
+
+        $('#form_assigned_to').val('');
+        $('.modal-save').click(function (){
+            $('#form_assigned_to').val('');
+        });
+
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                dayNamesMin: [ "N", "Pn", "Wt", "Śr", "Cz", "Pt", "So" ],
+                monthNames : [ "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" ],
+            },
+            en: {
+                dayNamesMin: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+                monthNames : [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+            },
+            fr: {
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                monthNames : [ "Janvier ", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+            },
+            de: {
+                dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+                monthNames : [ "Januar", "Februar", "Marz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
+            }
+        }
+
+        $('input.ui-datepicker').datepicker({
+            beforeShowDay: function(date) {
+                let day = date.getDay();
+                return [(day !== 0 && day !== 6), ''];
+            },
+            dateFormat: "yy-mm-dd",
+            firstDay: 1,
+            showAnim: "clip",
+            dayNamesMin: translate[userLanguage]["dayNamesMin"],
+            monthNames: translate[userLanguage]["monthNames"]
+        });
+    </script>
+{% endblock %}
