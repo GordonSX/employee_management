@@ -5,24 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="725a1b97-b7a4-45e6-81d1-dc506920e66f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/employee_management.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/employee_management.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220109114709.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20220319134617.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220127095318.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220129144947.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220129151425.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220202224027.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220205150356.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220212113920.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220219111350.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220226125223.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220228183341.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220303192825.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20220316205046.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventSubscriber/ChangePasswordSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventSubscriber/ChangePasswordSubscriber.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +266,7 @@
       <workItem from="1647692155707" duration="748000" />
       <workItem from="1647693008295" duration="2424000" />
       <workItem from="1647695564696" duration="4172000" />
-      <workItem from="1647701029101" duration="1897000" />
+      <workItem from="1647701029101" duration="2435000" />
     </task>
     <servers />
   </component>
