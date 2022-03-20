@@ -18,7 +18,6 @@
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
-* [Contact](#contact)
 <!-- * [License](#license) -->
 
 
@@ -33,14 +32,14 @@
 ## Technologies Used
 - Symfony - version 5.3.14
 - PHP - version 7.2.5/8.0
-- Twig - version 3.3.7
+- Twig - version 3.3.8
 
 
 ## Features
 List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- .
+- .
+- 
 
 
 ## Screenshots
@@ -63,13 +62,11 @@ DATABASE_URL="mysql://user:password@127.0.0.1:3306/dabase?serverVersion=yourServ
 
 ## Usage
 How does one go about using it?
-Provide various use cases and code examples here.
 
-`write-your-code-here`
 
 
 ## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: _in progress_ 
 
 
 ## Room for Improvement
@@ -87,16 +84,9 @@ To do:
 ## Acknowledgements
 Give credit here.
 - This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
 - Many thanks to...
-
-
-## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
 
 
 <!-- Optional -->
 <!-- ## License -->
 <!-- This project is open source and available under the [... License](). -->
-
-<!-- You don't have to include all sections - just the one's relevant to your project -->
