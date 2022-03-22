@@ -23,7 +23,6 @@
 * [Ideas](#ideas)
   * [Room for Improvement](#room-for-improvement)
   * [To do](#to-do)
-* [Acknowledgements](#acknowledgements)
 * [License](#license) 
 
 
@@ -118,11 +117,6 @@ Some ideas for improvement and some functionalities to be added in the future:
 ###To do:
 - Adding a calendar in the vacation request module and displaying employees' leaves in it (in order not to overlap)
 - Adding a work schedule (also a calendar?)
-
-
-## Acknowledgements
-- This project was inspired by...
-- Many thanks to...
 
 ## License
 This project is open source and available under the [MIT License](License).
