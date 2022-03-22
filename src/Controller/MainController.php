@@ -11,7 +11,6 @@ use App\Entity\PaymentInfo;
 use App\Entity\User;
 use App\Entity\VacationRequests;
 use DateInterval;
-use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,8 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Exception\InvalidPasswordException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccountExpiredException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -43,8 +40,8 @@ class MainController extends AbstractController
      */
     public function __construct(Security $user, EntityManagerInterface $entityManager){
         $currentUserIdentifier = $user->getUser()->getUserIdentifier();
-        $thisUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $currentUserIdentifier]);
-        if ($thisUser->getFirstTimeLoggingIn()){
+        $currentUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $currentUserIdentifier]);
+        if ($currentUser->getFirstTimeLoggingIn()){
             /*throw new Exception('User must change password first');*/
             throw new InvalidPasswordException('User must change password first');
         }
@@ -226,13 +223,6 @@ class MainController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
 
-        /*$addDays = new NonWorkingDays();
-        $year = '2030';
-        $addDays->setYear($year);
-        $addDays->setDays([ $year.'-01-01', $year.'-01-06', $year.'-04-21', $year.'-04-22', $year.'-05-01', $year.'-05-03', $year.'-06-09', $year.'-06-20', $year.'-08-15', $year.'-11-01', $year.'-11-11', $year.'-12-25', $year.'-12-26']);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($addDays);
-        $em->flush();*/
         $nonWorkingDays = $this->getDoctrine()->getRepository(NonWorkingDays::class)->findAll();
         if ($form->isSubmitted() && $form->isValid()){
             $dateFrom = $form->get('date_from')->getData();
@@ -272,7 +262,6 @@ class MainController extends AbstractController
             if ($newInterval<= $userObject->getNumberOfVacationDays()){
                 $vacationRequest->setUsername($userObject->getUserIdentifier());
                 $vacationRequest->setStatus('Wniosek przekazany do akceptacji');
-//                $userObject->setNumberOfVacationDays($userObject->getNumberOfVacationDays()-$newInterval);
                 $vacationRequest->setNumberOfDays($newInterval);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($vacationRequest);

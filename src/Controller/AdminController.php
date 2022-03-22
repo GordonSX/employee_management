@@ -11,7 +11,6 @@ use App\Entity\VacationRequests;
 use App\Service\AcceptancePath;
 use App\Service\NotificationService;
 use DateTime;
-use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,9 +23,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Exception\InvalidPasswordException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -46,7 +45,7 @@ class AdminController extends AbstractController
         $currentUserIdentifier = $user->getUser()->getUserIdentifier();
         $currentUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $currentUserIdentifier]);
         if ($currentUser->getFirstTimeLoggingIn()){
-            throw new AccountExpiredException('User must change password first');
+            throw new InvalidPasswordException('User must change password first');
         }
     }
 

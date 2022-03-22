@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="./public/img/Employee_Management.png" alt="Employee_Management"></a>
+    <img src="./public/img/Employee_Management.png" alt="Employee_Management">
   <br>
 </h1>
 
