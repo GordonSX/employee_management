@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\AssignedBonusGoals;
 use App\Entity\BonusGoals;
 use App\Entity\Hierarchy;
+use App\Entity\PaymentInfo;
 use App\Entity\User;
 use App\Entity\VacationRequests;
 use App\Service\AcceptancePath;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccountExpiredException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -38,14 +40,13 @@ class AdminController extends AbstractController
     protected $declineStatus = 'Wniosek odrzucono';
 
     /**
-     * @throws Exception
      * @noinspection NullPointerExceptionInspection
      */
     public function __construct(Security $user, EntityManagerInterface $entityManager){
         $currentUserIdentifier = $user->getUser()->getUserIdentifier();
         $currentUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $currentUserIdentifier]);
         if ($currentUser->getFirstTimeLoggingIn()){
-            throw new Exception('User must change password first');
+            throw new AccountExpiredException('User must change password first');
         }
     }
 
@@ -227,7 +228,7 @@ class AdminController extends AbstractController
                 //pierwsza litera imienia, nazwisko, miesiąc i rok utworzenia konta
                 $username = str_replace($search, $replace, $firstLetterOfName).strtolower(str_replace($search, $replace, $lastName)).$today->format('my');
                 $newUser->setUsername($username);
-                $newUser->setPassword($passwordHasher->hashPassword($newUser, 'NewPassword123'));
+                $newUser->setPassword($passwordHasher->hashPassword($newUser, 'NewPassword123!'));
                 $newUser->setProfilePicture('uploads/default.png');
                 $newUser->setFirstTimeLoggingIn(true);
             }
@@ -413,12 +414,16 @@ class AdminController extends AbstractController
     {
         $userObject = $this->getUserObject();
         $currentUserHierarchy = $this->getDoctrine()->getRepository(Hierarchy::class)->findOneBy(['name' => $userObject->getPosition()]);
-        $wholeHierarchy = $this->getDoctrine()->getRepository(Hierarchy::class)->findAllPositionsGraterThanCurrentUser($currentUserHierarchy->getLevel());
         $assignToChoices = [];
-        foreach ($wholeHierarchy as $level) {
-            $level = $level->getName();
-            $assignToChoices[$level] = $level;
+        if ($currentUserHierarchy!==null){
+            $wholeHierarchy = $this->getDoctrine()->getRepository(Hierarchy::class)->findAllPositionsGraterThanCurrentUser($currentUserHierarchy->getLevel());
+            foreach ($wholeHierarchy as $level) {
+                $level = $level->getName();
+                $assignToChoices[$level] = $level;
+            }
         }
+
+
 
         $assignToData = [];
         if ($create===0){
@@ -818,6 +823,137 @@ class AdminController extends AbstractController
             'usersAndRequests'              => $usersAndRequests,
             'acceptStatus'                  => $this->acceptStatus,
             'declineStatus'                 => $this->declineStatus
+        ]);
+    }
+
+    /**
+     * @Route(
+     *     "/{_locale}/add_payment_info",
+     *     name="add_payment_info",
+     *     requirements={
+     *         "_locale": "en|fr|de|pl",
+     *     }
+     * )
+     */
+    public function addPaymentInfo(Request $request): Response
+    {
+
+        $currentUserFirstName = $this->getUserObject()->getFirstName();
+        $currentUserLastName = $this->getUserObject()->getLastName();
+        $users = $this->getDoctrine()->getRepository(User::class)->findBy(['supervisor' => $currentUserFirstName.' '.$currentUserLastName]);
+        $usersArray = [];
+        if (!is_null($users)){
+            foreach ($users as $user){
+                $firstAndLastNameOfUser =  $user->getFirstName() . ' ' . $user->getLastName();
+                $usersArray[$firstAndLastNameOfUser] = $user->getUserIdentifier();
+            }
+        }
+        $form = $this->createFormBuilder()
+            ->add('user', ChoiceType::class, [
+                'attr'          => [
+                    'placeholder'   => 'Użytkownik',
+                ],
+                'label'         => 'Użytkownik',
+                'choices'          => $usersArray
+            ])
+            ->add('period', DateType::class, [
+                'html5'         => false,
+                'widget'        => 'single_text',
+                'attr'          => [
+                    'class'     => 'ui-datepicker',
+                    'width'     => '20px',
+                    'placeholder'   => 'Podaj okres',
+                ],
+                'label'         => 'Podaj okres'
+            ])
+            ->add('basic_salary', NumberType::class, [
+                'html5'         => true,
+                'attr'          => [
+                    'placeholder' => 'Podstawowe wynagrodzenie',
+                ],
+                'label'         => 'Podstawowe wynagrodzenie',
+            ])
+            ->add('bonus_salary', NumberType::class, [
+                'html5'         => true,
+                'attr'          => [
+                    'placeholder' => 'Dodatkowe wynagrodzenie',
+                ],
+                'label'         => 'Dodatkowe wynagrodzenie',
+            ])
+            ->add('save', SubmitType::class, [
+                'attr'      => [
+                    'class'     => 'btn btn-outline-success form-control'
+                ],
+                'label'     => 'Zapisz'
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $username = $form->get('user')->getData();
+            $period = $form->get('period')->getData();
+            $period = $period->format('Y-m');
+            $basic_salary = $form->get('basic_salary')->getData();
+            $bonus_salary = $form->get('bonus_salary')->getData();
+
+            $basic_info = $this->getDoctrine()->getRepository(PaymentInfo::class)->findOneBy(['username' => $username ]);
+            $oldBasicSalary[$period] = $basic_salary;
+            $oldBonusSalary[$period] = $bonus_salary;
+            if ($basic_info===null){
+                $basic_info = new PaymentInfo();
+                $basic_info->setUsername($username);
+            }else{
+                foreach ($basic_info->getBasicSalary() as $key => $value) {
+                    if ($key === $period){
+                        $this->addFlash(
+                            'warning',
+                            'Nie można dodać kolejej informacji płacowej dla podanego okresu!'
+                        );
+                        return $this->render('main/add_payment_info.html.twig', [
+                            'form'          => $form->createView()
+                        ]);
+                    }
+                    $oldBasicSalary[$key] = $value;
+                }
+
+                foreach ($basic_info->getBasicSalary() as $key => $value) {
+                    if ($key === $period){
+                        $this->addFlash(
+                            'warning',
+                            'Nie można dodać kolejej informacji płacowej dla podanego okresu!'
+                        );
+                        return $this->render('main/add_payment_info.html.twig', [
+                            'form'          => $form->createView()
+                        ]);
+                    }
+                    $oldBonusSalary[$key] = $value;
+                }
+            }
+            $basic_info->setBasicSalary($oldBasicSalary);
+            $basic_info->setBonusSalary($oldBonusSalary);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($basic_info);
+            $entityManager->flush();
+            $this->addFlash(
+                'notice',
+                'Informacja płacowa została dodana'
+            );
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()){
+            $basic_salary = $form->get('basic_salary')->getData();
+            $bonus_salary = $form->get('bonus_salary')->getData();
+            if (!is_numeric($basic_salary) || !is_numeric($bonus_salary)){
+                $this->addFlash(
+                    'warning',
+                    'Podstawowe wynagrodzenie/dodatkowe wynagrodzenie muszą być liczbą!'
+                );
+            }
+        }
+
+        return $this->render('main/add_payment_info.html.twig', [
+            'form'              => $form->createView()
         ]);
     }
 

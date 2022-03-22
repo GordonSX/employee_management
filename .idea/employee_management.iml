@@ -101,5 +101,6 @@
     <orderEntry type="library" name="datepicker" level="application" />
     <orderEntry type="library" name="bootstrap-combined" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="imask" level="application" />
   </component>
 </module>

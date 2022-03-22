@@ -20,7 +20,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Exception\InvalidPasswordException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccountExpiredException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -36,14 +39,14 @@ class MainController extends AbstractController
     protected $declineStatus = 'Wniosek odrzucono';
 
     /**
-     * @throws Exception
      * @noinspection NullPointerExceptionInspection
      */
     public function __construct(Security $user, EntityManagerInterface $entityManager){
         $currentUserIdentifier = $user->getUser()->getUserIdentifier();
         $thisUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $currentUserIdentifier]);
         if ($thisUser->getFirstTimeLoggingIn()){
-            throw new Exception('User must change password first');
+            /*throw new Exception('User must change password first');*/
+            throw new InvalidPasswordException('User must change password first');
         }
     }
 
@@ -73,51 +76,7 @@ class MainController extends AbstractController
             $numberOfEmployees = count($userSubordinates);
         }else{
             $numberOfEmployees = 0;
-            //TODO: create try - catch statements for to handle exception (w całym kodzie)
         }
-
-       /* $em = $this->getDoctrine()->getManager();
-        $basic_info = new PaymentInfo();
-        $basic_info = $this->getDoctrine()->getRepository(PaymentInfo::class)->find(1);
-        $basic_info->setUsername('kjerzyna');
-        $basic_info->setBasicSalary([
-            "2021-11"       => 3150,
-            "2021-10"       => 3220,
-            "2021-09"       => 4590,
-            "2021-08"       => 3490,
-            "2021-07"       => 5490,
-        ]);
-        $basic_info->setBonusSalary([
-            "2021-11"       => 620,
-            "2021-10"       => 500,
-            "2021-09"       => 400,
-            "2021-08"       => 800,
-            "2021-07"       => 405,
-        ]);
-
-        $em->persist($basic_info);
-        $em->flush();*/
-
-        /*$basic_info = $this->getDoctrine()->getRepository(PaymentInfo::class)->find(1);
-        $temp = [];
-        $temp['2021-12'] = 6969;
-        foreach ($basic_info->getBasicSalary() as $key => $value){
-            $temp[$key] = $value;
-        }
-
-        $temp2 = [];
-        $temp2['2021-12'] = 77;
-        foreach ($basic_info->getBonusSalary() as $key => $value){
-            $temp2[$key] = $value;
-        }
-
-
-        $basic_info->setBasicSalary($temp);
-        $basic_info->setBonusSalary($temp2);
-        $em->persist($basic_info);
-        $em->flush();*/
-
-        //TODO: Dodać obsługę dodawania informacji o wypłatach (info na temat update'u array powyżej)
         $informationAboutUserPayment = $this->getDoctrine()->getRepository(PaymentInfo::class)->findOneBy(['username' => $userObject->getUserIdentifier()]);
 
         $monthlyEmployeeCosts = $this->getDoctrine()->getRepository(MonthlyEmployeeCosts::class)->find(1);
@@ -379,6 +338,4 @@ class MainController extends AbstractController
             'vacationRequests'              => $vacationRequests
         ]);
     }
-
 }
-//TODO: wyczyść kod!!!

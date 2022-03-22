@@ -2,20 +2,22 @@
 
 namespace App\EventSubscriber;
 
-use Doctrine\DBAL\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\PasswordHasher\Exception\InvalidPasswordException;
+use Symfony\Component\Security\Core\Exception\AccountExpiredException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class ChangePasswordSubscriber implements EventSubscriberInterface
 {
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        if ($exception instanceof Exception){
+        if ($exception instanceof InvalidPasswordException){
             $locale = $event->getRequest()->getLocale();
             $redirect = new RedirectResponse('/'.$locale.'/change_password');
-            /*$event->setResponse($redirect);*/
+            $event->setResponse($redirect);
         }
     }
 

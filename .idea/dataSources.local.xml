@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="PS-213.6777.58">
+  <component name="dataSourceStorageLocal" created-in="PS-213.7172.28">
     <data-source name="mhr@localhost" uuid="3d3307b1-58da-4edc-95ea-11722dc4f480">
       <database-info product="MySQL" version="5.5.5-10.4.17-MariaDB" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MARIADB" exact-version="10.4.17" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
@@ -24,21 +24,6 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema" qname="@" />
-        </introspection-scope>
-      </schema-mapping>
-    </data-source>
-    <data-source name="mhr@localhost [2]" uuid="91a5851a-8371-4948-ab93-f2b2cec5167a">
-      <database-info product="PostgreSQL" version="13.6" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.3.3" dbms="POSTGRES" exact-version="13.6" exact-driver-version="42.3">
-        <identifier-quote-string>&quot;</identifier-quote-string>
-      </database-info>
-      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>postgres</user-name>
-      <schema-mapping>
-        <introspection-scope>
-          <node kind="database" qname="@">
-            <node kind="schema" qname="@" />
-          </node>
         </introspection-scope>
       </schema-mapping>
     </data-source>

@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('JQueryUI/jquery-ui.css') }}">
+    <style>
+        .form-select, .form-control{
+            margin-bottom: 2em;
+        }
+    </style>
+{% endblock %}
+
+{% block alerts %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ message|trans }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block main_greeting %}
+    <i class="fa fa-money main-icon" aria-hidden="true"></i>
+    <div class="main__greeting">
+        <h1>{{ 'Dodaj informacje płacowe'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block mainPanel %}
+    <div class="adminPanel">
+        {{ form_start(form, {'attr': {'class' : 'needs-validation'}}) }}
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.user, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.user) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.user) }}
+                        {{ form_label(form.user) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.period, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.period) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.period) }}
+                        {{ form_label(form.period) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.basic_salary, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.basic_salary) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.basic_salary) }}
+                        {{ form_label(form.basic_salary) }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating">
+                    {% if errorsArray is defined %}
+                        {{ form_widget(form.bonus_salary, {'attr': {'class' : 'is-valid'}}) }}
+                        {{ form_label(form.bonus_salary) }}
+                        <div class="valid-feedback">
+                            Looks Good!
+                        </div>
+                    {% else %}
+                        {{ form_widget(form.bonus_salary) }}
+                        {{ form_label(form.bonus_salary) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('JQueryUI/jquery-ui.js') }}"></script>
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        let userLanguage = '{{ app.request.locale }}';
+        let translate = {
+            pl: {
+                dayNamesMin: [ "N", "Pn", "Wt", "Śr", "Cz", "Pt", "So" ],
+                monthNames : [ "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień" ],
+            },
+            en: {
+                dayNamesMin: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+                monthNames : [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+            },
+            fr: {
+                dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+                monthNames : [ "Janvier ", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+            },
+            de: {
+                dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+                monthNames : [ "Januar", "Februar", "Marz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ],
+            }
+        }
+
+        $('input.ui-datepicker').datepicker({
+            beforeShowDay: function(date) {
+                let day = date.getDay();
+                return [(day !== 0 && day !== 6), ''];
+            },
+            dateFormat: "yy-mm-dd",
+            firstDay: 1,
+            showAnim: "clip",
+            dayNamesMin: translate[userLanguage]["dayNamesMin"],
+            monthNames: translate[userLanguage]["monthNames"]
+        });
+
+        /*let currencyMask = IMask(
+            document.getElementById('form_basic_salary'),
+            {
+                mask: 'num' + ' PLN',
+                blocks: {
+                    num: {
+                        // nested masks are available!
+                        mask: Number,
+                        thousandsSeparator: ' '
+                    }
+                }
+            });*/
+    </script>
+{% endblock %}

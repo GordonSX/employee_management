@@ -13,80 +13,116 @@
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
+  * [Homepage](#homepage)
+  * [Menage your employees](#menage-your-employees)
+  * [Create new user](#create-new-user)
+  * [Submit a vacation application](#submit-a-vacation-application)
+  * [Assigned bonus goals](#assigned-bonus-goals)
 * [Setup](#setup)
-* [Usage](#usage)
 * [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
+* [Ideas](#ideas)
+  * [Room for Improvement](#room-for-improvement)
+  * [To do](#to-do)
 * [Acknowledgements](#acknowledgements)
-<!-- * [License](#license) -->
+* [License](#license) 
 
 
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+- This project unifies and brings together in one place the most important information about the employee (his personal data, information on wages, vacation applications, etc.) as well as the company's expectations or bonus goals.
+- The purpose of this application is to help in the efficient management of employees in the company.
+- I undertook to write this application in order to improve my skills in working with the Symfony framework and getting to know it better and better.
 
 
 ## Technologies Used
 - Symfony - version 5.3.14
 - PHP - version 7.2.5/8.0
 - Twig - version 3.3.8
+- JavaScript/JQuery
+- AJAX
 
 
 ## Features
 List the ready features here:
-- .
-- .
-- 
-
+- Adding / editing / removing employees
+- Adding information about wages
+- Adding as well as managing vacation requests
+- Creating new business goals
+- Assigning them to specific positions
+- Editing / deleting business goals
+- A multi-stage acceptance of goals
+  - Creation a goal and assignment to a given position
+  - Approval / rejection by the employee with the addition of an optional comment
+  - Summary of the goal achievement level/resending the revised business goals card
+  - Acceptance/rejection of the assessed card of business goals
+- Notification panel (notifications sent with actions related to goal cards or vacation requests)
+- Forcing a password change at the first login
+- Translation into four different languages:
+  - Polish
+  - English
+  - German
+  - French
 
 ## Screenshots
-![Example screenshot](./public/img/preview.jpg )
-<!-- If you have screenshots you'd like to share, include them here. -->
+>Disclaimer: These screenshots show the appearance of the application in 'supervisor mode'. 
+> 
+>The employee does not have access to many of the following functionalities. He can perform basic activities such as submitting a vacation request, accepting or rejecting business goals, accepting or rejecting the summary of meeting goals or reading notifications.
+### Homepage
 
+![Homepage](./public/img/preview_en.jpg) 
+
+### Menage your employees
+![Menage your employees](./public/img/preview2_en.jpg ) 
+
+### Create new user
+![Create new user](./public/img/preview3_en.jpg )
+
+### Submit a vacation application
+![Submit a vacation application](./public/img/preview4_en.jpg )
+
+### Assigned bonus goals
+![Assigned bonus goals](./public/img/preview5_en.jpg )
 
 ## Setup
 Project requirements/dependencies are located in _composer.json_ file in the root of the repository.
 
-To setup local environment and get started with the project you first need to install and setup the symfony framework.
+To set up local environment and get started with the project you first need to install and set up the symfony framework.
 To do so follow the instructions avaliable [_here_](https://symfony.com/doc/5.4/setup.html#technical-requirements).
 
-Then set up a database and populate it with at least one user data and change the _DATABASE_URL_ in _.env_ file.
+Then clone the repository to a folder and update composer dependencies.
 
 ```
-DATABASE_URL="mysql://user:password@127.0.0.1:3306/dabase?serverVersion=yourServerVersion"
+  git clone https://github.com/GordonSX/employee_management.git
+  cd employee_management
+  composer update
 ```
 
+Then set up a database, change the _DATABASE_URL_ in _.env_ file (uncomment one of the lines) and create schema.  
+```
+symfony console doctrine:schema:create
+```
 
-## Usage
-How does one go about using it?
-
-
+To populate database with user data start built-in Symfony server and go to route `127.0.0.1:8000/setup`
 
 ## Project Status
 Project is: _in progress_ 
 
+## Ideas
+Some ideas for improvement and some functionalities to be added in the future:
 
-## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
+###Room for improvement:
+- Writing tests
+- Better form validation
+- Improving security
+- Improving performance
 
-Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
-
-To do:
-- Feature to be added 1
-- Feature to be added 2
+###To do:
+- Adding a calendar in the vacation request module and displaying employees' leaves in it (in order not to overlap)
+- Adding a work schedule (also a calendar?)
 
 
 ## Acknowledgements
-Give credit here.
 - This project was inspired by...
 - Many thanks to...
 
-
-<!-- Optional -->
-<!-- ## License -->
-<!-- This project is open source and available under the [... License](). -->
+## License
+This project is open source and available under the [MIT License](License).
