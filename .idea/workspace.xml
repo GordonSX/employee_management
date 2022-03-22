@@ -5,13 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="725a1b97-b7a4-45e6-81d1-dc506920e66f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/0629b8c7-0ac2-4a5d-acba-32c3e4ff7f11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/91a5851a-8371-4948-ab93-f2b2cec5167a.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/91a5851a-8371-4948-ab93-f2b2cec5167a/storage_v2/_src_/database/mhr.N6YBAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/91a5851a-8371-4948-ab93-f2b2cec5167a/storage_v2/_src_/database/mhr.N6YBAA/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/91a5851a-8371-4948-ab93-f2b2cec5167a/storage_v2/_src_/database/mhr.N6YBAA/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/91a5851a-8371-4948-ab93-f2b2cec5167a/storage_v2/_src_/database/mhr.N6YBAA/schema/public.abK9xQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -279,7 +272,7 @@
       <workItem from="1647701029101" duration="4276000" />
       <workItem from="1647790536071" duration="12383000" />
       <workItem from="1647896640374" duration="13980000" />
-      <workItem from="1647945104628" duration="28000" />
+      <workItem from="1647945104628" duration="113000" />
     </task>
     <servers />
   </component>

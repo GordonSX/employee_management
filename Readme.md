@@ -108,13 +108,13 @@ Project is: _in progress_
 ## Ideas
 Some ideas for improvement and some functionalities to be added in the future:
 
-###Room for improvement:
+### Room for improvement:
 - Writing tests
 - Better form validation
 - Improving security
 - Improving performance
 
-###To do:
+### To do:
 - Adding a calendar in the vacation request module and displaying employees' leaves in it (in order not to overlap)
 - Adding a work schedule (also a calendar?)
 
