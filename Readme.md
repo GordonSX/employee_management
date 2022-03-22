@@ -14,7 +14,7 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
   * [Homepage](#homepage)
-  * [Menage your employees](#menage-your-employees)
+  * [Manage your employees](#manage-your-employees)
   * [Create new user](#create-new-user)
   * [Submit a vacation application](#submit-a-vacation-application)
   * [Assigned bonus goals](#assigned-bonus-goals)
@@ -69,8 +69,8 @@ List the ready features here:
 
 ![Homepage](./public/img/preview_en.jpg) 
 
-### Menage your employees
-![Menage your employees](./public/img/preview2_en.jpg ) 
+### Manage your employees
+![Mnage your employees](./public/img/preview2_en.jpg ) 
 
 ### Create new user
 ![Create new user](./public/img/preview3_en.jpg )
