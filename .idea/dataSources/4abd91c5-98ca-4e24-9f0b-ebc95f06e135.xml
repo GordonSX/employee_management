@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="data">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.32">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.39">
     <root id="1">
       <ServerVersion>3.34.0</ServerVersion>
     </root>
@@ -1349,10 +1349,10 @@
     <table id="501" parent="170" name="user"/>
     <table id="502" parent="170" name="vacation_requests"/>
     <column id="503" parent="491" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="504" parent="491" name="bonus_goal_id">
       <DataType>INTEGER|0s</DataType>
@@ -1396,17 +1396,16 @@
     </foreign-key>
     <index id="512" parent="491" name="IDX_35A67D4597E6F2F6">
       <ColNames>bonus_goal_id</ColNames>
-      <ColumnCollations></ColumnCollations>
     </index>
     <key id="513" parent="491">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="514" parent="492" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="515" parent="492" name="target">
       <DataType>CLOB|0s</DataType>
@@ -1454,7 +1453,6 @@
     </column>
     <index id="524" parent="493" name="sqlite_autoindex_doctrine_migration_versions_1">
       <ColNames>version</ColNames>
-      <ColumnCollations></ColumnCollations>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
@@ -1464,10 +1462,10 @@
       <UnderlyingIndexName>sqlite_autoindex_doctrine_migration_versions_1</UnderlyingIndexName>
     </key>
     <column id="526" parent="494" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="527" parent="494" name="name">
       <DataType>VARCHAR(255)|0s</DataType>
@@ -1484,10 +1482,10 @@
       <Primary>1</Primary>
     </key>
     <column id="530" parent="495" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="531" parent="495" name="pension_insurance">
       <DataType>DOUBLE PRECISION|0s</DataType>
@@ -1519,10 +1517,10 @@
       <Primary>1</Primary>
     </key>
     <column id="537" parent="496" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="538" parent="496" name="year">
       <DataType>VARCHAR(4)|0s</DataType>
@@ -1539,10 +1537,10 @@
       <Primary>1</Primary>
     </key>
     <column id="541" parent="497" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="542" parent="497" name="username">
       <DataType>VARCHAR(255)|0s</DataType>
@@ -1584,10 +1582,10 @@
       <Primary>1</Primary>
     </key>
     <column id="550" parent="498" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="551" parent="498" name="username">
       <DataType>VARCHAR(180)|0s</DataType>
@@ -1635,10 +1633,10 @@
       <Position>2</Position>
     </column>
     <column id="562" parent="501" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="563" parent="501" name="username">
       <DataType>VARCHAR(180)|0s</DataType>
@@ -1747,7 +1745,6 @@
     </column>
     <index id="584" parent="501" name="UNIQ_8D93D649F85E0677">
       <ColNames>username</ColNames>
-      <ColumnCollations></ColumnCollations>
       <Unique>1</Unique>
     </index>
     <key id="585" parent="501">
@@ -1755,10 +1752,10 @@
       <Primary>1</Primary>
     </key>
     <column id="586" parent="502" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <SequenceIdentity>null</SequenceIdentity>
     </column>
     <column id="587" parent="502" name="username">
       <DataType>VARCHAR(180)|0s</DataType>
